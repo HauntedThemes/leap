@@ -1,0 +1,74 @@
+{{!-- The tag below means - insert everything in this file into the {body} of the default.hbs template --}}
+{{!< default}}
+
+{{!-- Everything inside the #post tags pulls data from the post --}}
+{{#post}}
+
+    <main id="content" class="content content-inner" role="main" data-id="{{id}}">
+        <article class="{{post_class}}">
+            <div class="post-meta">
+                {{author}}
+                <time class="post-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMMM YYYY"}}</time>
+            </div>
+            <h1 class="post-title">{{title}}</h1>
+            {{#if feature_image}}
+                <div class="content-holder">
+                    <img src="{{img_url feature_image}}" alt="{{title}}" class="rellax" data-rellax-speed="2" data-rellax-percentage="0.5">
+                </div>
+            {{/if}}
+            <section class="post-content">
+                {{content}}
+
+                <div class="social-share">
+                    <span>Share</span>
+                    <a class="twitter" href="https://twitter.com/intent/tweet/?text={{title}}&url={{@blog.url}}{{url}}" target="_blank" title="Share on Twitter"></a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{@blog.url}}{{url}}" target="_blank" title="Share on Facebook"></a>
+                </div>
+
+            </section>
+
+            {{#if tags}}
+                <ul class="tags">
+                {{#foreach tags}}
+                    <li>
+                        <a href="{{url}}" title="{{name}}" class="tag tag-{{id}} {{slug}}">{{name}}</a>
+                    </li>  
+                {{/foreach}}
+                </ul>
+            {{/if}}
+
+        </article>
+    </main>
+
+    {{!-- Everything inside the #author tags pulls data from the author --}}
+    {{#author}}
+
+        <section class="author">
+            {{#if profile_image}}
+            <figure class="author-image">
+                <a class="img" href="{{url}}" title="{{name}}"><img src="{{img_url profile_image}}" alt="{{name}}"></a>
+            </figure>
+            {{/if}}
+
+            <h4><a href="{{url}}">{{name}}</a></h4>
+
+            {{#if bio}}
+                <p>{{bio}}</p>
+            {{else}}
+                <p>Read <a href="{{url}}">more posts</a> by this author.</p>
+            {{/if}}
+            <div class="author-meta">
+                {{#if location}}<span class="author-location">{{location}}</span>{{/if}}
+                {{#if website}}<span class="author-link"><a href="{{website}}">{{website}}</a></span>{{/if}}
+            </div>
+            <div class="social">
+                {{#if twitter}}<a href="{{twitter_url}}" class="twitter" title="{{twitter}}"></a>{{/if}}
+                {{#if facebook}}<a href="{{facebook_url}}" class="facebook" title="{{facebook}}"></a>{{/if}}
+            </div>
+        </section>
+
+    {{/author}}
+
+    <div class="comments"></div>
+
+{{/post}}

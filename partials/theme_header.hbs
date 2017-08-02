@@ -1,0 +1,18 @@
+        <header>
+        	<div class="header-container">
+	        	<div class="container">
+		            <a class="blog-logo" href="{{@blog.url}}" title="{{@blog.title}}">
+		                {{#if @blog.logo}} <img src="{{@blog.logo}}" alt="{{@blog.title}}" /> {{else}} <b>{{@blog.title}}</b> {{/if}} 
+		            </a>
+		            {{navigation}}
+	            </div>
+            </div>
+			{{!-- This is the search container - visible after a user clicks the search button --}}
+
+			<div class="search-container">
+			    <form>
+			        <input id="search-field" placeholder="Search" autocomplete="off"/>
+			    </form>
+			    <ul id="results"></ul>
+			</div>
+        </header>

@@ -1,0 +1,41 @@
+{{!-- The tag below means - insert everything in this file into the {body} of the default.hbs template --}}
+{{!< default}}
+
+{{!-- Everything inside the #author tags pulls data from the author --}}
+{{#author}}
+
+    <section class="author">
+        {{#if profile_image}}
+        <figure class="author-image">
+            <a class="img" href="{{url}}" title="{{name}}"><img src="{{img_url profile_image}}" alt="{{name}}"></a>
+        </figure>
+        {{/if}}
+
+        <h4><a href="{{url}}">{{name}}</a></h4>
+
+        {{#if bio}}
+            <p>{{bio}}</p>
+        {{else}}
+            <p>Read <a href="{{url}}">more posts</a> by this author.</p>
+        {{/if}}
+        <div class="author-meta">
+            {{#if location}}<span class="author-location">{{location}}</span>{{/if}}
+            {{#if website}}<span class="author-link"><a href="{{website}}">{{website}}</a></span>{{/if}}
+        </div>
+        <div class="social">
+            {{#if twitter}}<a href="{{twitter_url}}" class="twitter" title="{{twitter}}"></a>{{/if}}
+            {{#if facebook}}<a href="{{facebook_url}}" class="facebook" title="{{facebook}}"></a>{{/if}}
+        </div>
+    </section>
+
+{{/author}}
+
+{{!-- The main content area - Masonry grid --}}
+<main id="content" class="content grid" role="main">
+
+    {{> "loop"}}
+    <div class="grid-sizer"></div>
+
+</main>
+
+{{pagination}}
