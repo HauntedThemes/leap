@@ -5,7 +5,7 @@
         <div class="post-meta {{#if feature_image}}has-image{{/if}}">
             {{#if tags}}
                 <ul class="tags">
-                {{#foreach tags}}
+                {{#foreach tags limit="5"}}
                     <li>
                         <a href="{{url}}" title="{{name}}" class="tag tag-{{id}} {{slug}}">{{name}}</a>
                     </li>  

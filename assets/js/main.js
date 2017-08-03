@@ -19,18 +19,26 @@ jQuery(document).ready(function($) {
 
         // Initialize Masonry - Cascading grid layout library
         if ($('.grid').length) {
+
+        	$('.grid .post').each(function(index, el) {
+        		var minHeight = $(this).find('.tags').height() + 125;
+        		var postMetaHeight = $(this).find('.post-meta').height();
+        		if (minHeight > postMetaHeight) {
+        			$(this).find('.post-meta').height(minHeight).addClass('expand');
+        		};
+
+        		var a = $(this).find('.post-title a');
+        		a.html(a.html().replace(/^(\w+)/, '<span>$1</span>'));
+
+        	});
+
             var elem = document.querySelector('.grid');
             msnry = new Masonry(elem, {
                 itemSelector: '.grid .grid-item',
                 columnWidth: '.grid .grid-sizer',
                 percentPosition: true,
                 gutter: 30,
-                hiddenStyle: {
-                    opacity: 0
-                },
-                visibleStyle: {
-                    opacity: 1
-                }
+                transitionDuration: 0
             });
         }
 
@@ -111,7 +119,7 @@ jQuery(document).ready(function($) {
 
     // Get first number of words from a string
     function getWords(str) {
-        return str.split(/\s+/).slice(0,44).join(" ");
+        return str.split(/\s+/).slice(0,22).join(" ");
     }
 
     // Append posts on masonry container
@@ -132,11 +140,21 @@ jQuery(document).ready(function($) {
             featured = 'featured';
         };
 
+        if (d[2].slice(0,1) == '0') {
+            d[2] = d[2].slice(1,2);
+        }
+
         var datetime = d[0] +'-'+ d[1] +'-'+ d[2];
-        var date = d[2] +' '+ monthNames[monthNumber] +' '+ d[0];
-        var excerpt = getWords($(postData.html).text());
+        var date = monthNames[monthNumber] + ' ' + d[2] + ', ' + d[0];
+        var excerpt;
+        if (postData.custom_excerpt != null) {
+        	excerpt = postData.custom_excerpt;
+        }else{
+        	excerpt = getWords($(postData.html).text());
+        };
 
         var data = {
+        	comment_id: postData.comment_id,
             title: postData.title,
             date: {
                 "datetime": datetime,
@@ -163,59 +181,68 @@ jQuery(document).ready(function($) {
         }
 
         var template = [
-        	'<article class="post grid-item {{#tags}}{{#tags.tag}}tag-{{slug}} {{/tags.tag}}{{/tags}}">',
+        	'<article class="post grid-item {{#tags}}{{#tags.tag}}tag-{{slug}} {{/tags.tag}}{{/tags}}" data-id="{{comment_id}}">',
 			    '<div class="content-holder">',
-			        '<div class="post-meta {{#if feature_image}}has-image{{/if}}">',
-			            '{{#if tags}}',
+			        '<div class="post-meta {{#feature_image}}has-image{{/feature_image}}">',
+			            '{{#tags}}',
 			                '<ul class="tags">',
-			                '{{#foreach tags}}',
+			                '{{#tags.tag}}',
 			                    '<li>',
-			                        '<a href="{{url}}" title="{{name}}" class="tag tag-{{id}} {{slug}}">{{name}}</a>',
+			                        '<a href="/tag/{{slug}}" title="{{name}}" class="tag tag-{{id}} {{slug}}">{{name}}</a>',
 			                    '</li>',
-			                '{{/foreach}}',
+			                '{{/tags.tag}}',
 			                '</ul>',
-			            '{{/if}}',
+			            '{{/tags}}',
 			            '<a href="{{url}}" title="{{title}}" class="img-holder">',
-			                '{{#if feature_image}}',
-			                    '<img src="{{img_url feature_image}}" alt="{{title}}">',
-			                '{{/if}}',
+			                '{{#feature_image}}',
+			                    '<img src="{{feature_image}}" alt="{{title}}">',
+			                '{{/feature_image}}',
 			            '</a>',
-			            '<time class="post-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MMMM D, YYYY"}}</time>',
+			            '<time class="post-date" datetime="{{date.datetime}}">{{date.date}}</time>',
 			        '</div>',
 			        '<h2 class="post-title"><a href="{{url}}" title="{{title}}">{{title}}</a></h2>',
 			        '<p>',
-			            '{{excerpt words="22"}}',
+			            '{{excerpt}}',
 			        '</p>',
 			    '</div>',
-			'</article>';
-            // '<article class="post grid-item {{#tags}}{{#tags.tag}}tag-{{slug}} {{/tags.tag}}{{/tags}}">',
-            //    ' <div class="post-meta">',
-            //         '<a href="/author/{{author.slug}}/">{{author.name}}</a>',
-            //         '<time class="post-date" datetime="{{date.datetime}}">{{date.date}}</time>',
-            //     '</div>',
-            //     '<h2 class="post-title"><a href="{{url}}" title="{{title}}">{{title}}</a></h2>',
-            //     '<div class="content-holder">',
-            //         '{{#feature_image}}',
-            //             '<a href="{{url}}" title="{{title}}" class="img-holder">',
-            //                 '<img src="{{feature_image}}" alt="{{title}}" class="rellax notransition" data-rellax-speed="2" data-rellax-percentage="0.5">',
-            //             '</a>',
-            //         '{{/feature_image}}',
-            //         '<p>',
-            //             '{{excerpt}}',
-            //         '</p>',
-            //     '</div>',
-            //     '<a class="read-more btn" href="{{url}}" title="{{title}}">Read more</a>',
-            // '</article>'
+			'</article>'
         ].join("\n");
 
         var post = Mustache.render(template, data);
         post = $(post);
-
-        post.addClass('hidden');
+        post.find('.content-holder').addClass('no-opacity');
         $('#content').append( post );
         $('#content').imagesLoaded( function() {
+	        var minHeight = post.find('.tags').height() + 125;
+			var postMetaHeight = post.find('.post-meta').height();
+			if (minHeight > postMetaHeight) {
+				post.find('.post-meta').height(minHeight).addClass('expand');
+			};
+
+			var a = post.find('.post-title a');
+    		a.html(a.html().replace(/^(\w+)/, '<span>$1</span>'));
+
             msnry.appended( post );
-            post.removeClass('hidden');
+            var animeOpts = {
+				duration: 800,
+				easing: [0.1,1,0.3,1],
+				delay: function(t,i) {
+					return i*35;
+				},
+				opacity: {
+					value: [0,1],
+					duration: 600,
+					easing: 'linear'
+				},
+				// translateX: [100,0],
+				translateY: [200,0],
+				translateZ: [300,0],
+				// rotateZ: [10,0],
+				rotateX: [75,0]
+            }
+            animeOpts.targets = '.post[data-id="'+ postData.comment_id +'"] .content-holder';
+            anime.remove(animeOpts.targets);
+        	anime(animeOpts);
         });
     }
 
