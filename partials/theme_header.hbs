@@ -1,18 +1,28 @@
         <header>
         	<div class="header-container">
 	        	<div class="container">
+	        		<span class="nav-trigger"><i></i></span>
 		            <a class="blog-logo" href="{{@blog.url}}" title="{{@blog.title}}">
-		                {{#if @blog.logo}} <img src="{{@blog.logo}}" alt="{{@blog.title}}" /> {{else}} <b>{{@blog.title}}</b> {{/if}} 
+		                {{#if @blog.logo}} <img src="{{@blog.logo}}" alt="{{@blog.title}}" /> {{else}}{{@blog.title}}{{/if}} 
 		            </a>
-		            {{navigation}}
+		            <a href="#" class="search-trigger"></a>
 	            </div>
             </div>
+            
+            {{navigation}}
+			
 			{{!-- This is the search container - visible after a user clicks the search button --}}
 
 			<div class="search-container">
-			    <form>
-			        <input id="search-field" placeholder="Search" autocomplete="off"/>
-			    </form>
-			    <ul id="results"></ul>
+				<div class="search-content">
+					<div class="search-inner">
+						<div class="container">
+						    <form>
+						        <input id="search-field" placeholder="Search" autocomplete="off"/>
+						    </form>
+						    <ul id="results"></ul>
+						</div>
+					</div>
+				</div>
 			</div>
         </header>

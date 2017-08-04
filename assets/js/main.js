@@ -7,13 +7,15 @@ jQuery(document).ready(function($) {
     var config = {
         'share-selected-text': true,
         'load-more': true,
-        'infinite-scroll': false,
+        'infinite-scroll': true,
+        'infinite-scroll-step': 3,
         'disqus-shortname': 'lizun-1'
     };
 
     var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     var msnry;
+    var step = 0;
 
     $(window).load(function() {
 
@@ -61,6 +63,11 @@ jQuery(document).ready(function($) {
                 parseUrl = parseUrl + '&filter=tag:' + $('body').attr('data-tag');
             }
 
+            if ($(this).hasClass('was-dots')) {
+            	$(this).removeClass('was-dots').addClass('dots');
+            	step = 0;
+            };
+
             $.ajax({
                 url: ghost.url.api("posts") + parseUrl,
                 type: 'get'
@@ -78,7 +85,7 @@ jQuery(document).ready(function($) {
             }).done(function(data) {
                 var sum = nextPage*pagination;
                 if (sum >= data.meta.pagination.total) {
-                    $('#load-posts').addClass('hidden');
+                    $('#load-posts').addClass('end').text('No more posts');
                 }
                 nextPage += 1;
             }).fail(function(err) {
@@ -91,18 +98,36 @@ jQuery(document).ready(function($) {
     if (config['infinite-scroll'] && config['load-more']) {
         var checkTimer = 'on';
         if ($('#load-posts').length > 0) {
+        	$('#load-posts').addClass('dots');
             $(window).on('scroll', function(event) {
                 var timer;
-                if (isScrolledIntoView('#load-posts') && checkTimer == 'on') {
-                    $('#load-posts').click();
+                if (isScrolledIntoView('#load-posts') && checkTimer == 'on' && step < config['infinite-scroll-step']) {
+                    $('#load-posts').addClass('load').click();
                     checkTimer = 'off';
+                    step++;
                     timer = setTimeout(function() {
+                    	$('#load-posts').removeClass('load');
                         checkTimer = 'on';
+	                    if (step == config['infinite-scroll-step']) {
+	                    	$('#load-posts').removeClass('dots').addClass('was-dots');
+	                    };
                     }, 1000);
                 };
             });
         };
     };
+
+    $( document ).ajaxStart(function() {
+    	if ($('#load-posts').hasClass('dots load')) {
+			$('#load-posts').addClass('active');
+    	};
+	});
+
+	$( document ).ajaxComplete(function() {
+    	if ($('#load-posts').hasClass('dots')) {
+			$('#load-posts').removeClass('active');
+    	};
+	});
 
     // Tria's functions
 
@@ -245,5 +270,25 @@ jQuery(document).ready(function($) {
         	anime(animeOpts);
         });
     }
+
+    $(".search-trigger").on('click', function(event) {
+        event.preventDefault();
+        $('.search-container').slideToggle(500);
+    });
+
+    // Initialize ghostHunter - A Ghost blog search engine
+    $("#search-field").ghostHunter({
+        results             : "#results",
+        onKeyUp             : true,
+        zeroResultsInfo     : true,
+        displaySearchInfo   : true,
+        info_template       : "<p>No posts found</p>",
+        result_template     : "<li><a href='{{link}}' title='{{title}}'>{{title}}</a></li>",
+        onComplete      : function( results ){
+            if (results.length == 0 && $('#search-field').val() != '') {
+                $('#results p').addClass('empty');
+            };
+        }
+    });
 
 });
