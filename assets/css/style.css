@@ -132,6 +132,10 @@ a{
     transition: all 0.3s ease-in-out;
 }
 
+a:hover{
+    color: #373737;
+}
+
 h1{
     font-size: 36px;
 }
@@ -359,8 +363,24 @@ input:-webkit-autofill {
 
 .grid{
     font-size: 0;
-    max-width: 1170px;
+    width: calc(100% + 30px);
     margin-top: 30px;
+    margin-left: -15px;
+}
+
+.tag-template #content,
+.author-template #content{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    max-width: 1170px;
+    padding-left: 15px;
+}
+
+.tag-template .grid,
+.author-template .grid{
+    margin-left: auto;
+    width: calc(75% + 30px);
 }
 
 .grid article{
@@ -369,6 +389,11 @@ input:-webkit-autofill {
     display: inline-block;
     margin: 0 15px 30px 15px;    
     vertical-align: top;
+}
+
+.tag-template .grid article,
+.author-template .grid article{
+    width: calc(33.33333% - 30px);
 }
 
 .grid article .content-holder{
@@ -382,6 +407,19 @@ input:-webkit-autofill {
     margin: 0 0 30px 0;   
 }
 
+.tag-template .grid .grid-sizer,
+.author-template .grid .grid-sizer{
+    width: calc(33.33333% - 30px);
+}
+
+.tags-container,
+.author-template .author{
+    width: 250px;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 32px;
+}
+
 .grid article h2{
     font-size: 21px;
     line-height: 25px;
@@ -391,26 +429,6 @@ input:-webkit-autofill {
 .grid article h2 a span{
     position: relative;
     z-index: 2;
-}
-
-.grid article h2 a span:before{
-    content: '';
-    position: absolute;
-    z-index: -1;
-    top: 15px;
-    left: 0;
-    width: 100%;
-    height: 15px;
-    opacity: 0.1;
-    background: #000000;
-    transform: scale3d(0,1,1);
-    transform-origin: 0% 50%;
-    transition: transform 0.5s;
-    transition-timing-function: cubic-bezier(0.2,1,0.3,1);
-}
-
-.grid article h2 a:hover span:before{
-    transform: scale3d(1,1,1);
 }
 
 .grid article p{
@@ -587,6 +605,19 @@ input:-webkit-autofill {
 
 .tags li a:before{
     content: '#';
+}
+
+.tag-template .tags-container .tags li a{
+    opacity: .25;
+}
+
+.tag-template .tags-container .tags li.active a{
+    opacity: 1;
+}
+
+.tag-template .tags-container.active{
+    position: fixed;
+    top: 0;
 }
 
 #load-posts{
@@ -878,32 +909,41 @@ header{
     position: relative;
 }
 
-header nav{
-    display: none;
-}
-
-header .search-container{
+header .search-container,
+header .menu-container{
     width: 100%;
     text-align: center;
     z-index: 9;
     display: none;
 }
 
-header .search-container .search-content{
+header .search-container .search-content,
+header .menu-container .menu-content{
     padding-top: 12px;
 }
 
-header .search-container .search-inner{
+header .search-container .search-inner,
+header .menu-container .menu-inner{
     background-color: #EAEAEA;
     border-top: 1px solid #DBDBDB;
 }
 
-header .search-container .container{
-    padding: 75px 0;
+header .search-container .search-inner form{
+    margin-bottom: 75px;
+}
+
+header .search-container .container,
+header .menu-container .container{
+    padding: 75px 0 25px;
     position: relative;
 }
 
-header .search-container .container:before{
+header .menu-container .container{
+    padding: 0;
+}
+
+header .search-container .container:before,
+header .menu-container .container:before{
     content: '';
     position: absolute;
     top: -9px;
@@ -915,6 +955,11 @@ header .search-container .container:before{
     border-left: 1px solid #DBDBDB;
     transform: rotate(45deg);
     z-index: 2;
+}
+
+header .menu-container .container:before{
+    right: auto;
+    left: 5px;
 }
 
 header .search-container #search-field{
@@ -936,6 +981,24 @@ header .search-container #search-field:focus{
     border-bottom: 1px solid #000;
 }
 
+header nav ul{
+    list-style-type: none;
+    padding: 25px 0;
+    margin: 0;
+    text-align: center;
+}
+
+header nav ul li{
+    display: inline-block;
+    margin: 25px;
+}
+
+header nav ul li a{
+    font-size: 21px;
+    line-height: 25px;
+    font-weight: 900;
+}
+
 #results p{
     display: none;
     color: #949494;
@@ -947,7 +1010,7 @@ header .search-container #search-field:focus{
 }
 
 #results{
-    margin: 50px 0 0 0;
+    margin: 0;
     padding: 0;
     text-align: left;
 }
@@ -1059,12 +1122,39 @@ header .search-trigger{
     position: relative;
     font-size: 22px;
     margin-left: 10px;
-    -webkit-transition: opacity 0.3s ease-in-out;
-    -moz-transition: opacity 0.3s ease-in-out;
-    -o-transition: opacity 0.3s ease-in-out;
-    transition: opacity 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 header .search-trigger:before{
     content: "\e903";
+}
+
+header .search-trigger.active,
+header .nav-trigger.active{
+    opacity: .25;
+}
+
+.author{
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    position: relative;
+    padding: 20px;
+}
+
+.author .author-image{
+    margin: 0;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: -30px;
+    left: 20px;
+}
+
+.author .author-image img{
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
 }

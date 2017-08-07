@@ -8,7 +8,7 @@ jQuery(document).ready(function($) {
         'share-selected-text': true,
         'load-more': true,
         'infinite-scroll': true,
-        'infinite-scroll-step': 3,
+        'infinite-scroll-step': 1,
         'disqus-shortname': 'lizun-1'
     };
 
@@ -28,10 +28,6 @@ jQuery(document).ready(function($) {
         		if (minHeight > postMetaHeight) {
         			$(this).find('.post-meta').height(minHeight).addClass('expand');
         		};
-
-        		var a = $(this).find('.post-title a');
-        		a.html(a.html().replace(/^(\w+)/, '<span>$1</span>'));
-
         	});
 
             var elem = document.querySelector('.grid');
@@ -54,7 +50,10 @@ jQuery(document).ready(function($) {
         var nextPage = 2;
         var pagination = $('#load-posts').attr('data-posts_per_page');
 
-        $('#load-posts').click(function() {
+        $('#load-posts').on('click', function(event) {
+            event.preventDefault();
+
+            var $this = $(this);
 
             var parseUrl = '&include=tags&limit=' + pagination + '&page=' + nextPage;
             if ($('body').attr('data-author')) {
@@ -63,9 +62,12 @@ jQuery(document).ready(function($) {
                 parseUrl = parseUrl + '&filter=tag:' + $('body').attr('data-tag');
             }
 
-            if ($(this).hasClass('was-dots')) {
-            	$(this).removeClass('was-dots').addClass('dots');
-            	step = 0;
+            if ($this.hasClass('was-dots')) {
+                setTimeout(function() {
+                    console.log($(this));
+            	   $this.removeClass('was-dots').addClass('dots');
+            	   step = 0;
+                }, 1000);
             };
 
             $.ajax({
@@ -236,16 +238,13 @@ jQuery(document).ready(function($) {
         var post = Mustache.render(template, data);
         post = $(post);
         post.find('.content-holder').addClass('no-opacity');
-        $('#content').append( post );
-        $('#content').imagesLoaded( function() {
+        $('#content .grid').append( post );
+        $('#content .grid').imagesLoaded( function() {
 	        var minHeight = post.find('.tags').height() + 125;
 			var postMetaHeight = post.find('.post-meta').height();
 			if (minHeight > postMetaHeight) {
 				post.find('.post-meta').height(minHeight).addClass('expand');
 			};
-
-			var a = post.find('.post-title a');
-    		a.html(a.html().replace(/^(\w+)/, '<span>$1</span>'));
 
             msnry.appended( post );
             var animeOpts = {
@@ -259,10 +258,8 @@ jQuery(document).ready(function($) {
 					duration: 600,
 					easing: 'linear'
 				},
-				// translateX: [100,0],
 				translateY: [200,0],
 				translateZ: [300,0],
-				// rotateZ: [10,0],
 				rotateX: [75,0]
             }
             animeOpts.targets = '.post[data-id="'+ postData.comment_id +'"] .content-holder';
@@ -273,7 +270,30 @@ jQuery(document).ready(function($) {
 
     $(".search-trigger").on('click', function(event) {
         event.preventDefault();
-        $('.search-container').slideToggle(500);
+        if ($(".nav-trigger").hasClass('active')) {
+            $(".nav-trigger").toggleClass('active');
+            $('.menu-container').slideToggle(500, function(){
+                $(".search-trigger").toggleClass('active');
+                $('.search-container').slideToggle(500);
+            });
+        }else{
+            $(".search-trigger").toggleClass('active');
+            $('.search-container').slideToggle(500);
+        };
+    });
+
+    $(".nav-trigger").on('click', function(event) {
+        event.preventDefault();
+        if ($(".search-trigger").hasClass('active')) {
+            $(".search-trigger").toggleClass('active');
+            $('.search-container').slideToggle(500, function(){
+                $(".nav-trigger").toggleClass('active');
+                $('.menu-container').slideToggle(500);
+            });
+        }else{
+            $(".nav-trigger").toggleClass('active');
+            $('.menu-container').slideToggle(500);
+        }
     });
 
     // Initialize ghostHunter - A Ghost blog search engine
@@ -290,5 +310,41 @@ jQuery(document).ready(function($) {
             };
         }
     });
+
+    if ($('.tag-template').length) {
+        var tagSlug = $('.tag-template').attr('data-tag');
+        $('.tags-container .' + tagSlug).parent().addClass('active');
+    };
+
+    // Position tags share buttons inside a single post
+    if ($('.tags-container').length) {
+        $(window).scroll(function() {
+            tagsPosition();
+        });
+        tagsPosition();
+    };
+
+    // Position share buttons
+    function tagsPosition(){
+        
+        var contentHolderDistanceTop = $('#content .grid').offset().top;
+        var contentHeight = $('#content').outerHeight(true);
+        var contentDistanceTop = $('#content').offset().top - parseInt($('#content').css('marginTop'), 10);
+        var tagsHeight = $('#content .tags-container').height();
+        var contentHeightAndDistance = contentHeight + contentDistanceTop;
+
+        if ($(window).scrollTop() > (contentHolderDistanceTop - 30) && $(window).scrollTop() < (contentHeightAndDistance - 30 - tagsHeight)) {
+            $('.tags-container').addClass('active');
+            $('.tags-container').attr('style', '');
+        }else if($(window).scrollTop() > (contentHeightAndDistance - 30 - tagsHeight)){
+            $('.tags-container').css({
+                position: 'absolute',
+                top: $('#content').height() + $('header').height() + 30 + 'px'
+            });
+        }else if($(window).scrollTop() < (contentHolderDistanceTop - 30)){
+            $('.tags-container').removeClass('active');
+            $('.tags-container').attr('style', '');
+        }
+    }
 
 });

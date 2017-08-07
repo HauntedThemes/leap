@@ -1,18 +1,22 @@
 {{!-- The tag below means - insert everything in this file into the {body} of the default.hbs template --}}
 {{!< default}}
 
-{{#tag}}
-<div class="tag-title">
-    <h1>{{name}}</h1>
-</div>
-{{/tag}}
-
 {{!-- The main content area - Masonry grid --}}
-<main id="content" class="content grid" role="main">
-
-    {{> "loop"}}
-    <div class="grid-sizer"></div>
-
+<main id="content" class="container" role="main">
+	<div class="tags-container">
+		{{#get "tags" limit="all"}}
+		    <ul class="tags">
+		    {{#foreach tags}}
+		        <li>
+		            <a href="{{url}}" title="{{name}}" class="tag tag-{{id}} {{slug}}">{{name}}</a>
+		        </li>  
+		    {{/foreach}}
+		    </ul>
+		{{/get}}
+	</div>
+	<div class="grid">
+	    {{> "loop"}}
+	    <div class="grid-sizer"></div>
+	</div>
 </main>
-
 {{pagination}}

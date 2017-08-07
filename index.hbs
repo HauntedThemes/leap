@@ -2,10 +2,10 @@
 {{!< default}}
 
 {{!-- The main content area - Masonry grid --}}
-<main id="content" class="container grid {{^is "paged"}}first{{/is}}" role="main">
-
-    {{> "loop"}}
-    <div class="grid-sizer"></div>
-
+<main id="content" class="container" role="main">
+	<div class="grid {{^is "paged"}}first{{/is}}">
+	    {{> "loop"}}
+	    <div class="grid-sizer"></div>
+	</div>
 </main>
 {{pagination}}
