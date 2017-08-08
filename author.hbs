@@ -13,7 +13,13 @@
             </figure>
             {{/if}}
 
-            <h4><a href="{{url}}">{{name}}</a></h4>
+            <h4>
+                <a href="{{url}}">{{name}}</a>
+                <div class="social">
+                    {{#if twitter}}<a href="{{twitter_url}}" class="twitter" title="{{twitter}}" target="_blank" rel="noopener noreferrer"></a>{{/if}}
+                    {{#if facebook}}<a href="{{facebook_url}}" class="facebook" title="{{facebook}}" target="_blank" rel="noopener noreferrer"></a>{{/if}}
+                </div>
+            </h4>
 
             {{#if bio}}
                 <p>{{bio}}</p>
@@ -21,12 +27,8 @@
                 <p>Read <a href="{{url}}">more posts</a> by this author.</p>
             {{/if}}
             <div class="author-meta">
+                {{#if website}}<span class="author-link"><a href="{{website}}" target="_blank" rel="noopener noreferrer">{{website}}</a></span>{{/if}}
                 {{#if location}}<span class="author-location">{{location}}</span>{{/if}}
-                {{#if website}}<span class="author-link"><a href="{{website}}">{{website}}</a></span>{{/if}}
-            </div>
-            <div class="social">
-                {{#if twitter}}<a href="{{twitter_url}}" class="twitter" title="{{twitter}}"></a>{{/if}}
-                {{#if facebook}}<a href="{{facebook_url}}" class="facebook" title="{{facebook}}"></a>{{/if}}
             </div>
         </section>
     {{/author}}

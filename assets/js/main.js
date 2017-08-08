@@ -28,6 +28,10 @@ jQuery(document).ready(function($) {
         		if (minHeight > postMetaHeight) {
         			$(this).find('.post-meta').height(minHeight).addClass('expand');
         		};
+
+                var a = $(this).find('.post-title a');
+                a.html(a.html().replace(/^(\w+)/, '<span>$1</span>'));
+
         	});
 
             var elem = document.querySelector('.grid');
@@ -246,6 +250,9 @@ jQuery(document).ready(function($) {
 				post.find('.post-meta').height(minHeight).addClass('expand');
 			};
 
+            var a = post.find('.post-title a');
+            a.html(a.html().replace(/^(\w+)/, '<span>$1</span>'));
+
             msnry.appended( post );
             var animeOpts = {
 				duration: 800,
@@ -308,6 +315,13 @@ jQuery(document).ready(function($) {
             if (results.length == 0 && $('#search-field').val() != '') {
                 $('#results p').addClass('empty');
             };
+            if ($('.search-inner').find('a').length) {
+                $('.search-inner a').each(function(index, el) {
+                    var a = $(this);
+                    a.html(a.html().replace(/^(\w+)/, '<span>$1</span>'));
+                    
+                });
+            };
         }
     });
 
@@ -322,6 +336,14 @@ jQuery(document).ready(function($) {
             tagsPosition();
         });
         tagsPosition();
+    };
+
+    // Position tags share buttons inside a single post
+    if ($('.author-template').length) {
+        $(window).scroll(function() {
+            authorPosition();
+        });
+        authorPosition();
     };
 
     // Position share buttons
@@ -344,6 +366,29 @@ jQuery(document).ready(function($) {
         }else if($(window).scrollTop() < (contentHolderDistanceTop - 30)){
             $('.tags-container').removeClass('active');
             $('.tags-container').attr('style', '');
+        }
+    }
+
+    // Position share buttons
+    function authorPosition(){
+        
+        var contentHolderDistanceTop = $('#content .grid').offset().top;
+        var contentHeight = $('#content').outerHeight(true);
+        var contentDistanceTop = $('#content').offset().top - parseInt($('#content').css('marginTop'), 10);
+        var tagsHeight = $('#content .author').height();
+        var contentHeightAndDistance = contentHeight + contentDistanceTop;
+
+        if ($(window).scrollTop() > (contentHolderDistanceTop - 30) && $(window).scrollTop() < (contentHeightAndDistance - 30 - tagsHeight)) {
+            $('.author').addClass('active');
+            $('.author').attr('style', '');
+        }else if($(window).scrollTop() > (contentHeightAndDistance - 30 - tagsHeight)){
+            $('.author').css({
+                position: 'absolute',
+                top: $('#content').height() + $('header').height() + 30 + 'px'
+            });
+        }else if($(window).scrollTop() < (contentHolderDistanceTop - 30)){
+            $('.author').removeClass('active');
+            $('.author').attr('style', '');
         }
     }
 
