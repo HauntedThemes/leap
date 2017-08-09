@@ -330,66 +330,41 @@ jQuery(document).ready(function($) {
         $('.tags-container .' + tagSlug).parent().addClass('active');
     };
 
-    // Position tags share buttons inside a single post
-    if ($('.tags-container').length) {
-        $(window).scroll(function() {
-            tagsPosition();
-        });
-        tagsPosition();
-    };
+    $(".author-template .author").stick_in_parent({
+        offset_top: 30
+    });
 
-    // Position tags share buttons inside a single post
-    if ($('.author-template').length) {
-        $(window).scroll(function() {
-            authorPosition();
-        });
-        authorPosition();
-    };
+    $(".tags-container").stick_in_parent();
 
-    // Position share buttons
-    function tagsPosition(){
-        
-        var contentHolderDistanceTop = $('#content .grid').offset().top;
-        var contentHeight = $('#content').outerHeight(true);
-        var contentDistanceTop = $('#content').offset().top - parseInt($('#content').css('marginTop'), 10);
-        var tagsHeight = $('#content .tags-container').height();
-        var contentHeightAndDistance = contentHeight + contentDistanceTop;
+    $(".content-inner .author").stick_in_parent({
+        offset_top: 50
+    });
 
-        if ($(window).scrollTop() > (contentHolderDistanceTop - 30) && $(window).scrollTop() < (contentHeightAndDistance - 30 - tagsHeight)) {
-            $('.tags-container').addClass('active');
-            $('.tags-container').attr('style', '');
-        }else if($(window).scrollTop() > (contentHeightAndDistance - 30 - tagsHeight)){
-            $('.tags-container').css({
-                position: 'absolute',
-                top: $('#content').height() + $('header').height() + 30 + 'px'
+    $(".content-inner .info-bar").stick_in_parent();
+
+    function progressBar(){
+        var postContentOffsetTop = $('.post-content').offset().top;
+        var postContentHeight = $('.post-content').height();
+        if ($(window).scrollTop() > postContentOffsetTop && $(window).scrollTop() < (postContentOffsetTop + postContentHeight)) {
+            var heightPassed = $(window).scrollTop() - postContentOffsetTop;
+            var percentage = heightPassed * 100/postContentHeight;
+            $('.progress').css({
+                width: percentage + '%'
             });
-        }else if($(window).scrollTop() < (contentHolderDistanceTop - 30)){
-            $('.tags-container').removeClass('active');
-            $('.tags-container').attr('style', '');
-        }
+        }else if($(window).scrollTop() < postContentOffsetTop){
+            $('.progress').css({
+                width: '0%'
+            });
+        }else{
+            $('.progress').css({
+                width: '100%'
+            });
+        };
     }
 
-    // Position share buttons
-    function authorPosition(){
-        
-        var contentHolderDistanceTop = $('#content .grid').offset().top;
-        var contentHeight = $('#content').outerHeight(true);
-        var contentDistanceTop = $('#content').offset().top - parseInt($('#content').css('marginTop'), 10);
-        var tagsHeight = $('#content .author').height();
-        var contentHeightAndDistance = contentHeight + contentDistanceTop;
-
-        if ($(window).scrollTop() > (contentHolderDistanceTop - 30) && $(window).scrollTop() < (contentHeightAndDistance - 30 - tagsHeight)) {
-            $('.author').addClass('active');
-            $('.author').attr('style', '');
-        }else if($(window).scrollTop() > (contentHeightAndDistance - 30 - tagsHeight)){
-            $('.author').css({
-                position: 'absolute',
-                top: $('#content').height() + $('header').height() + 30 + 'px'
-            });
-        }else if($(window).scrollTop() < (contentHolderDistanceTop - 30)){
-            $('.author').removeClass('active');
-            $('.author').attr('style', '');
-        }
-    }
+    $(window).on('scroll', function(event) {
+        progressBar();
+    });
 
 });
+
