@@ -4,7 +4,7 @@
 {{!-- Everything inside the #post tags pulls data from the post --}}
 {{#post}}
 
-    <main id="content" class="container content-inner" role="main" data-id="{{id}}">
+    <main id="content" class="container content-inner" role="main" data-id="{{comment_id}}">
         <article class="{{post_class}}">
             <div class="post-meta {{#if feature_image}}has-image{{/if}}">
                 {{#if tags}}
@@ -70,9 +70,13 @@
                 </div>
 
             </section>
+
+            <div class="comments">
+                <a href="#" class="comments-trigger"></a>
+            </div>
+
         </article>
     </main>
 
-    <div class="comments"></div>
 
 {{/post}}

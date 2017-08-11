@@ -19,6 +19,19 @@ jQuery(document).ready(function($) {
 
     $(window).load(function() {
 
+        $('.post-content img').each(function(index, el) {
+            if (!$(this).parent().is("a")) {
+                $( "<a href='" + $(this).attr('src') + "' class='zoom'></a>" ).insertAfter( $(this) );
+                $(this).appendTo($(this).next("a"));
+            };
+        });
+
+        $('.zoom').fluidbox();
+
+        $(window).on('scroll', function(event) {
+            $('.zoom').fluidbox('close');
+        });
+
         // Initialize Masonry - Cascading grid layout library
         if ($('.grid').length) {
 
@@ -363,8 +376,32 @@ jQuery(document).ready(function($) {
     }
 
     $(window).on('scroll', function(event) {
-        progressBar();
+        if ($('.post-template').length) {
+            progressBar();
+        };
     });
+
+    // Initialize Disqus comments
+    if ($('#content').attr('data-id') && config['disqus-shortname'] != '') {
+
+        $('.comments-trigger').on('click', function(event) {
+            event.preventDefault();
+            $('.comments').append('<div id="disqus_thread"></div>').addClass('active');
+
+            var disqus_config = function () {
+                this.page.url = window.location.href;
+                this.page.identifier = $('#content').attr('data-id');
+            };
+
+            (function() {
+            var d = document, s = d.createElement('script');
+            s.src = '//'+ config['disqus-shortname'] +'.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+        });
+
+    };
 
 });
 
