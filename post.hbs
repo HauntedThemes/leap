@@ -30,13 +30,11 @@
                 {{!-- Everything inside the #author tags pulls data from the author --}}
                 {{#author}}
                     <section class="author">
-                        <figure class="author-image">
                         {{#if profile_image}}
+                        <figure class="author-image">
                             <a class="img" href="{{url}}" title="{{name}}"><img src="{{img_url profile_image}}" alt="{{name}}"></a>
-                        {{else}}
-                            <a class="img" href="{{url}}" title="{{name}}">{{name}}</a>
-                        {{/if}}
                         </figure>
+                        {{/if}}
 
                         <div class="author-content">
                             <h4>
@@ -77,6 +75,17 @@
 
         </article>
     </main>
-
+    
+    <div class="related-posts">
+        {{#get "posts" limit="4" include="tags" filter="id:-{{comment_id}}+tag:{{primary_tag.slug}}"}}
+            {{#if posts}}
+                <h3>Related posts</h3>
+                <div class="grid">
+                    {{> "loop"}}
+                    <div class="grid-sizer"></div>
+                </div>
+            {{/if}}
+        {{/get}}
+    </div>
 
 {{/post}}

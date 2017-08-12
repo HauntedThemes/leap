@@ -403,5 +403,23 @@ jQuery(document).ready(function($) {
 
     };
 
+    // Validate Subscribe input
+    $('.gh-signin').on('submit', function(event) {
+        var email = $('.gh-input').val();
+        if (!validateEmail(email)) {
+            $('.gh-input').addClass('error');
+            setTimeout(function() {
+                $('.gh-input').removeClass('error');
+            }, 500);
+            event.preventDefault();
+        };
+    });
+
+    // Validate email input
+    function validateEmail(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    } 
+
 });
 

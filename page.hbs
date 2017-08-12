@@ -4,18 +4,21 @@
 {{!-- Everything inside the #post tags pulls data from the post --}}
 {{#post}}
 
-<main id="content" class="content content-inner" role="main">
-    <article class="{{post_class}}">
-        <h1 class="post-title">{{title}}</h1>
-        {{#if feature_image}}
-            <div class="content-holder">
-                <img src="{{img_url feature_image}}" alt="{{title}}" class="rellax" data-rellax-speed="2" data-rellax-percentage="0.5">
-            </div>
-        {{/if}}
-        <section class="post-content">
-            {{content}}
-        </section>
-    </article>
-</main>
+    <main id="content" class="container content-inner" role="main">
+        <article class="{{post_class}}">
+            {{#if feature_image}}
+                <div class="post-meta">
+                    <img src="{{img_url feature_image}}" alt="{{title}}">
+                </div>
+            {{/if}}
+            <section class="post-content">
 
+                <h1 class="post-title">{{title}}</h1>
+
+                {{content}}
+
+            </section>
+        </article>
+    </main>
+    
 {{/post}}
