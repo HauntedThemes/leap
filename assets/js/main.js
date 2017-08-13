@@ -332,9 +332,13 @@ jQuery(document).ready(function($) {
                 $('.search-inner a').each(function(index, el) {
                     var a = $(this);
                     a.html(a.html().replace(/^(\w+)/, '<span>$1</span>'));
-                    
                 });
             };
+            $('#results li').each(function(index, el) {
+                if (index > 11) {
+                    $(this).hide();
+                };
+            });
         }
     });
 
@@ -420,6 +424,17 @@ jQuery(document).ready(function($) {
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
     } 
+
+    // Initialize shareSelectedText
+    if (config['share-selected-text']) {
+        shareSelectedText('.content-inner .post-content', {
+            sanitize: true,
+            buttons: [
+                'twitter',
+            ],
+            tooltipTimeout: 250
+        });
+    };
 
 });
 

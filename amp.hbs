@@ -223,6 +223,17 @@
            1. General - Setting up some base styles
            ========================================================================== */
 
+        @font-face {
+            font-family: 'icons';
+            src: url('../../assets/fonts/icons.eot');
+            src: url('../../assets/fonts/icons.eot#iefix') format('embedded-opentype'),
+               url('../../assets/fonts/icons.woff') format('woff'),
+               url('../../assets/fonts/icons.ttf') format('truetype'),
+               url('../../assets/fonts/icons.svg#icons') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         html {
             max-height: 100%;
             height: 100%;
@@ -234,26 +245,25 @@
         body {
             max-height: 100%;
             height: 100%;
-            color: #646464;
+            color: #373737;
             background: #fff;
             letter-spacing: 0.01rem;
+            background: #f1f1f1;
             font-family: "Merriweather", serif;
             font-size: 16px;
             line-height: 24px;
             text-rendering: geometricPrecision;
-            border-top: 10px solid #FF4400;
 
             -webkit-font-feature-settings: "kern" 1;
             -moz-font-feature-settings: "kern" 1;
             -o-font-feature-settings: "kern" 1;
         }
 
-        ::-moz-selection {
-            background: #d6edff;
-        }
-
         ::selection {
-            background: #d6edff;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        ::-moz-selection {
+            background: rgba(0, 0, 0, 0.2);
         }
 
         h1,
@@ -302,11 +312,19 @@
         }
 
         a {
-            color: #0044FF;
+            color: #333333;
+            text-decoration: none;
+            border-bottom: 1px solid #333333;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
         }
 
         a:hover {
-            color: #FF4400;
+            text-decoration: none;
+            border-bottom: 1px solid #949494;
+            color: #949494;
         }
 
         p,
@@ -314,7 +332,7 @@
         ol,
         dl {
             margin: 0 0 2.5rem 0;
-            font-size: 1.5rem;
+            font-size: 14px;
             text-rendering: geometricPrecision;
 
             -webkit-font-feature-settings: "liga" 1, "onum" 1, "kern" 1;
@@ -372,15 +390,30 @@
         blockquote {
             box-sizing: border-box;
             margin: 1.75em 0 1.75em 0;
-            padding: 0 0 0 1.75em;
-            border-left: #FF4400 0.4em solid;
+            padding: 0;
+            position: relative;
 
             -moz-box-sizing: border-box;
+        }
+
+        blockquote:before {
+            font-family: "icons";
+            content: "\e907";
+            width: 23px;
+            position: absolute;
+            font-style: normal;
+            top: 0;
+            left: -10px;
+            height: 20px;
+            color: #cccccc;
+            z-index: 1;
         }
 
         blockquote p {
             margin: 0.8em 0;
             font-style: italic;
+            position: relative;
+            z-index: 2;
         }
 
         blockquote small {
@@ -581,6 +614,10 @@
             line-height: 30px;
         }
 
+        img{
+            max-width: 100%;
+        }
+
         /* ==========================================================================
            2. Utilities
            ========================================================================== */
@@ -623,12 +660,13 @@
         }
         .blog-title,
         .content {
-            margin: auto;
+            margin: 0 auto;
             max-width: 600px;
         }
 
         .blog-title a {
             display: block;
+            text-align: center;
             padding-right: 16px;
             padding-left: 16px;
             height: 50px;
@@ -639,6 +677,8 @@
             color: #333333;
             font-weight: bold;
             position: relative;
+            border: none;
+            margin-top: 15px;
         }
 
         .post {
@@ -648,10 +688,12 @@
             margin-left: 16px;
             padding-bottom: 0;
             max-width: 100%;
+            background: #fff;
             border-bottom: #ebf2f6 1px solid;
             word-wrap: break-word;
             font-size: 0.95em;
             line-height: 1.65em;
+            border-radius: 5px;
         }
 
         .post-header {
@@ -659,12 +701,12 @@
         }
 
         .post-title {
-            color: #FF4400;
+            color: #333333;
             margin-bottom: 0;
         }
 
         .post-title a {
-            color: #FF4400;
+            color: #333333;
             text-decoration: none;
         }
 
@@ -674,18 +716,11 @@
             font-family: "Open Sans", sans-serif;
             font-size: 1.3rem;
             line-height: 2.2rem;
-            color: #0044FF;
             font-weight: bold;
-            text-align: right;
         }
 
         .post-meta a {
-            color: #0044FF;
             text-decoration: none;
-        }
-
-        .post-meta a:hover {
-            text-decoration: underline;
         }
 
         .post-meta .author {
@@ -719,17 +754,108 @@
                in the opposite direction by half its own width.
                Works for images that are larger than their containers. */
             position: relative;
-            left: 50%;
             display: block;
             padding: 0;
             min-width: 0;
-            max-width: 112%; /* fallback when calc doesn't work */
-            width: calc(100% + 32px); /* expand with to image + margins */
             height: auto;
-            transform: translateX(-50%);
+        }
 
-            -webkit-transform: translateX(-50%); /* for Safari and iOS */
-            -ms-transform: translateX(-50%); /* for IE9 */
+        .tags{
+            text-transform: uppercase;
+            font-weight: 700;
+            margin: 0;
+            list-style-type: none;
+            padding: 0;
+            line-height: 1;
+            font-size: 0;
+        }
+
+        .tags li{
+            display: inline-block;
+            margin-right: 4px;
+            margin-bottom: 10px;
+        }
+
+        .tags li a{
+            font-size: 11px;
+            line-height: 13px;
+            color: #000;
+            padding: 0px 5px 2px;
+            border-radius: 2px;
+            box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.05);
+            border: 1px solid #000;
+        }
+
+        .tags li a:before{
+            content: '#';
+        }
+
+        article .post-meta {
+            position: relative;
+            min-height: 146px;
+            overflow: hidden;
+            border-radius: 5px 5px 0 0;
+            font-size: 0;
+        }
+
+        article .tags {
+            position: absolute;
+            margin-bottom: 25px;
+            display: inline-block;
+            max-width: calc(100% - 50px);
+            top: 25px;
+            left: 25px;
+            z-index: 2;
+            margin-bottom: 0;
+        }
+
+        article .tags li a {
+            color: #FFFFFF;
+            border: 1px solid #FFFFFF;
+        }
+
+        article .tags a:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .content-inner article .post-meta .post-date {
+            left: 25px;
+            bottom: 30px;
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        article .post-meta .post-date {
+            font-size: 14px;
+            line-height: 25px;
+            position: absolute;
+            left: 25px;
+            bottom: 15px;
+            color: #fff;
+            z-index: 2;
+        }
+
+        .kg-card-markdown{
+            padding: 10px 25px;
+        }
+
+        .content-inner article .post-meta:not(.has-image){
+            min-height: 250px;
+        }
+
+        article .post-meta:not(.has-image){
+            min-height: 150px;
+            background: #cccccc;
+            border-radius: 5px 5px 0 0;
+        }
+
+        article .post-meta:not(.has-image) .img-holder{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            border-radius: 5px 5px 0 0;
         }
 
         .footnotes {
@@ -758,21 +884,21 @@
             position: relative;
             padding: 2rem 0;
             max-width: 600px;
-            color: #fff;
-            background: #0044FF;
+            color: #333333;
             font-family: "Open Sans", sans-serif;
             font-size: 1.1rem;
             line-height: 1.75em;
-            margin: 2.5rem auto 0 auto;
+            margin: 0 auto 0 auto;
         }
 
         .site-footer a {
-            color: #fff;
+            color: #333333;
             text-decoration: none;
+            border: none;
         }
 
         .site-footer a:hover {
-            border-bottom: #bbc7cc 1px solid;
+            color: #949494;
         }
 
         .poweredby {
@@ -805,23 +931,24 @@
         </nav>
     </header>
 
-    <main class="content" role="main">
+    <main class="content content-inner" role="main">
         <article class="post">
 
-            <header class="post-header">
-                <section class="post-meta">
-                    {{#author}}
-                    <p class="author"><a href="{{url}}">{{name}}</a></p>
-                    {{/author}}
-                    <time class="post-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMMM YYYY"}}</time>
-                </section>
-                <h1 class="post-title">{{title}}</h1>
-            </header>
-            {{#if feature_image}}
-            <figure class="post-image">
-                <amp-img src="{{img_url feature_image absolute="true"}}" width="600" height="400" layout="responsive"></amp-img>
-            </figure>
-            {{/if}}
+            <div class="post-meta {{#if feature_image}}has-image{{/if}}">
+                {{#if tags}}
+                    <ul class="tags">
+                    {{#foreach tags limit="5"}}
+                        <li>
+                            <a href="{{url}}" title="{{name}}" class="tag tag-{{id}} {{slug}}">{{name}}</a>
+                        </li>  
+                    {{/foreach}}
+                    </ul>
+                {{/if}}
+                {{#if feature_image}}
+                    <img src="{{img_url feature_image}}" alt="{{title}}">
+                {{/if}}
+                <time class="post-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MMMM D, YYYY"}}</time>
+            </div>
             <section class="post-content">
 
                 {{amp_content}}

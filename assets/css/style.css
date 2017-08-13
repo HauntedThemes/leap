@@ -117,7 +117,7 @@ td, th{ padding: 0; }
 }
 
 body{
-    font-family: "sofia-pro", "Open Sans", sans-serif;
+    font-family: "sofia-pro", "Roboto", sans-serif;
     background: #f1f1f1;
     color: #373737;
     font-weight: 400;
@@ -289,7 +289,7 @@ label{
 textarea{
     border: 4px solid #F8F8F8;
     color: #FF5416;
-    font-family: "sofia-pro", "Open Sans", sans-serif;
+    font-family: "sofia-pro", "Roboto", sans-serif;
     font-size: 20px;
     line-height: 30px;
     background: transparent;
@@ -326,7 +326,7 @@ input:-webkit-autofill {
     font-size: 14px;
     line-height: 14px;
     color: #949494;
-    padding: 10px 15px 12px;
+    padding: 12px 15px;
     border-radius: 2px;
     box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.05);
     border: 1px solid #949494;
@@ -404,11 +404,6 @@ input:-webkit-autofill {
     vertical-align: top;
 }
 
-/*.tag-template .grid article,
-.author-template .grid article{
-    width: calc(33.33333% - 30px);
-}*/
-
 .grid article .content-holder{
     border-radius: 5px;
     background: #fff;
@@ -419,11 +414,6 @@ input:-webkit-autofill {
     width: 262.5px;
     margin: 0 0 30px 0;   
 }
-
-/*.tag-template .grid .grid-sizer,
-.author-template .grid .grid-sizer{
-    width: calc(33.33333% - 30px);
-}*/
 
 .tags-container,
 .author-template .author{
@@ -437,6 +427,7 @@ input:-webkit-autofill {
 .author-template .author{
     width: 210.5px;
     margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .grid article h2{
@@ -630,14 +621,15 @@ article .post-meta:not(.has-image) .img-holder{
 .tags li{
     display: inline-block;
     margin-right: 4px;
-    margin-bottom: 10px;
+    margin-bottom: 4px;
 }
 
 .tags li a{
     font-size: 11px;
     line-height: 13px;
     color: #000;
-    padding: 0px 5px 2px;
+    padding: 2px 5px;
+    display: inline-block;
     border-radius: 2px;
     box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.05);
     border: 1px solid #000;
@@ -663,6 +655,10 @@ article .post-meta:not(.has-image) .img-holder{
 #load-posts{
     display: none;
     margin: 70px auto 100px;
+    -webkit-transition: border 0.3s ease-in-out, color 0.3s ease-in-out, background 0.3s ease-in-out;
+    -moz-transition: border 0.3s ease-in-out, color 0.3s ease-in-out, background 0.3s ease-in-out;
+    -o-transition: border 0.3s ease-in-out, color 0.3s ease-in-out, background 0.3s ease-in-out;
+    transition: border 0.3s ease-in-out, color 0.3s ease-in-out, background 0.3s ease-in-out;
 }
 
 #load-posts:after{
@@ -1011,6 +1007,7 @@ header .search-container #search-field{
     color: #000000;
     border-bottom: 1px solid #DBDBDB;
     outline: 0;
+    border-radius: 0;
     -webkit-transition: border 0.3s ease-in-out;
     -moz-transition: border 0.3s ease-in-out;
     -o-transition: border 0.3s ease-in-out;
@@ -1599,5 +1596,146 @@ header .nav-trigger.active{
 
 .subscribe input{
     background: #fff;
-    width: calc(100% - 40px);
+    width: calc(100% - 80px);
+}
+
+.subscribe .post-content p{
+    color: #fff;
+}
+
+.subscribe header a{
+    width: 80px;
+    height: 80px;
+    display: flex;
+    margin: 0 auto 80px;
+    align-items: center;
+    justify-content: center;
+}
+
+.subscribe header a:before{
+    font-family: "icons";
+    content: "\e909";
+    font-size: 24px;
+    color: #cccccc;
+}
+
+.error-title{
+    text-align: center;
+    margin-bottom: 100px;
+    width: 250px;
+    padding: 25px 25px 50px 25px;
+    margin: 50px auto 100px;
+    border-radius: 5px;
+}
+
+.error-title h1{
+    margin-bottom: 0;
+}
+
+.error-title p{
+    margin-top: 10px;
+}
+
+/* ==========================================================================
+   7. Share Selected Text
+   ========================================================================== */
+
+.share-selected-text-main-container {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    -webkit-transform: translateY(5px);
+    -ms-transform: translateY(5px);
+    transform: translateY(5px);
+    transition: .3s ease opacity, .3s ease transform, .3s ease top, .3s ease left;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    z-index: 99;
+    pointer-events: none;
+}
+
+.share-selected-text-main-container.active {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+    z-index: 999;
+}
+
+.share-selected-text-main-container.active .share-selected-text-inner {
+    pointer-events: auto;
+}
+
+.share-selected-text-main-container .share-selected-text-inner {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background: #333333;
+    height: 100%;
+    pointer-events: none;
+    position: relative;
+}
+
+.share-selected-text-main-container .share-selected-text-inner:after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 7px 7.5px 0;
+    border-color: #404658 transparent transparent;
+}
+
+.share-selected-text-main-container .share-selected-text-btn {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #fff;
+    height: 100%;
+    margin: 0;
+    padding: 0 20px;
+    transition: .2s ease all;
+}
+
+.share-selected-text-main-container .share-selected-text-btn:focus,
+.share-selected-text-main-container .share-selected-text-btn:hover {
+    background: #646464;
+}
+
+.share-selected-text-main-container .share-selected-text-btn .fa-twitter:before{
+    font-family: 'icons';
+    content: '\e902';
+    font-size: 10px;
+    font-style: normal;
 }
