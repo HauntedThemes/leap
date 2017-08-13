@@ -611,7 +611,7 @@ article .post-meta:not(.has-image) .img-holder{
 .tags{
     text-transform: uppercase;
     font-weight: 700;
-    margin: 0;
+    margin: 0 0 30px 0;
     list-style-type: none;
     padding: 0;
     line-height: 1;
@@ -643,7 +643,12 @@ article .post-meta:not(.has-image) .img-holder{
     opacity: .25;
 }
 
-.tag-template .tags-container .tags li.active a{
+.tag-template .tags-container .tags li a:hover{
+    opacity: .75;
+}
+
+.tag-template .tags-container .tags li.active a,
+.tag-template .tags-container .tags li.active a:hover{
     opacity: 1;
 }
 
@@ -1738,4 +1743,14 @@ header .nav-trigger.active{
     content: '\e902';
     font-size: 10px;
     font-style: normal;
+}
+
+@media (max-width: 1199px) {
+    .container{
+        max-width: 848px;
+    }
+    .tag-template .grid, .author-template .grid{
+        margin-left: -15px;
+        margin-right: 0;
+    }
 }
