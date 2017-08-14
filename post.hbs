@@ -76,7 +76,7 @@
         </article>
     </main>
     
-    <div class="related-posts">
+    <div class="related-posts container">
         {{#get "posts" limit="4" include="tags" filter="id:-{{comment_id}}+tag:{{primary_tag.slug}}"}}
             {{#if posts}}
                 <h3>Related posts</h3>

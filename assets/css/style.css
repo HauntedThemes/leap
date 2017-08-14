@@ -260,6 +260,7 @@ ol, ul, dl{
     font-size: 17px;
     margin: 20px 0;
     line-height: 25px;
+    padding-left: 20px;
 }
 
 hr{
@@ -1112,7 +1113,11 @@ header nav ul li a:hover:before{
     z-index: 2;
 }
 
-#results li a:before{
+#results li a span{
+    position: relative;
+}
+
+#results li a span:before{
     content: '';
     position: absolute;
     z-index: -1;
@@ -1128,7 +1133,7 @@ header nav ul li a:hover:before{
     transition-timing-function: cubic-bezier(0.2,1,0.3,1);
 }
 
-#results li a:hover:before{
+#results li a:hover span:before{
     transform: scale3d(1,1,1);
 }
 
@@ -1152,7 +1157,8 @@ header .blog-logo{
 }
 
 header .blog-logo img{
-    max-width: 150px;
+    max-width: 250px;
+    max-height: 150px;
 }
 
 header .nav-trigger{
@@ -1542,9 +1548,7 @@ header .nav-trigger.active{
 }
 
 .related-posts{
-    max-width: 1140px;
-    margin: 0 auto 100px auto;
-    width: 100%;
+    margin-bottom: 100px;
 }
 
 .related-posts h3{
@@ -1749,8 +1753,212 @@ header .nav-trigger.active{
     .container{
         max-width: 848px;
     }
-    .tag-template .grid, .author-template .grid{
-        margin-left: -15px;
+    #results li{
+        width: calc(33.33333% - 50px);
+    }
+    #results li:nth-of-type(4n+4){
+        margin-right: 66.66px;
+    }
+    #results li:nth-of-type(3n+3){
         margin-right: 0;
+    }
+    header nav ul li{
+        margin: 20px;
+    }
+    .tag-template .grid, .author-template .grid{
+        width: 585px;
+    }
+    .content-inner .author{
+        margin-left: 616px;
+    }
+    .content-inner .post-content{
+        padding: 50px 100px 40px 50px;
+    }
+    .comments{
+        padding: 0 50px 50px 50px;
+    }
+    .comments.active{
+        padding-bottom: 50px;
+    }
+    .content-inner .info-bar{
+        margin-left: -50px;
+    }
+    .content-inner article .tags{
+        top: 50px;
+        left: 50px;
+        max-width: calc(100% - 100px);
+    }
+    .content-inner article .post-meta .post-date{
+        left: 50px;
+        bottom: 30px;
+    }
+    .related-posts .grid article:last-of-type{
+        display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    p{
+        font-size: 15px;
+        line-height: 23px;
+    }
+    h1{
+        font-size: 32px;
+    }
+    h2{
+        font-size: 24px;
+    }
+    h3{
+        font-size: 18px;
+    }
+    h4{
+        font-size: 14px;
+    }
+    h5{
+        font-size: 12px;
+    }
+    h6{
+        font-size: 10px;
+    }
+    .grid article p{
+        font-size: 15px;
+        line-height: 23px;
+    }
+    .container {
+        max-width: 555px;
+    }
+    .content-inner article .post-meta .post-date{
+        font-size: 14px;
+    }
+    header .blog-logo img{
+        max-width: 150px;
+        max-height: 100px;
+    }
+    header{
+        padding: 50px 0 1px;
+    }
+    header .header-container .container{
+        margin-bottom: 20px;
+    }
+    header nav ul li{
+        display: block;
+        line-height: 18px;
+    }
+    header nav ul li a{
+        font-size: 16px;
+        line-height: 18px;
+    }
+    header nav ul{
+        padding: 15px 0;
+    }
+    header .search-container #search-field{
+        font-size: 24px;
+        line-height: 28px;
+    }
+    header .search-container .container{
+        padding: 45px 0 5px;
+    }
+    #results li{
+        line-height: 18px;
+        padding-bottom: 30px;
+    }
+    #results li a{
+        font-size: 16px;
+        line-height: 18px;
+    }
+    #results li{
+        width: calc(50% - 50px);
+    }
+    #results li:nth-of-type(3n+3){
+        margin-right: 66.66px;
+    }
+    #results li:nth-of-type(2n+2){
+        margin-right: 0;
+    }
+    header nav ul li a:before,
+    #results li a span:before{
+        top: 8px;
+        height: 12px;
+    }
+    footer .container-footer{
+        flex-direction: column;
+    }
+    footer .tags-col, footer .newsletter-col{
+        width: calc(100% - 80px);
+    }
+    footer .tags-col{
+        margin-bottom: 30px;
+    }
+    .content-inner article{
+        width: 100%;
+    }
+    .content-inner .author{
+        position: relative;
+        margin-left: 0;
+    }
+    .content-inner .post-content {
+        padding: 50px 50px 40px 50px;
+    }
+    .content-inner .author{
+        width: 100%;
+        max-width: calc(100% - 50px);
+        text-align: center;
+        left: 0;
+        margin-top: 75px;
+        margin-bottom: 15px;
+    }
+    .author .author-image{
+        left: 50%;
+        margin-left: -25px;
+    }
+    .related-posts .grid article:last-of-type{
+        display: block;
+    }
+    .related-posts h3{
+        font-size: 18px;
+    }
+    .content-inner article{
+        margin-bottom: 75px;
+    }
+    .related-posts{
+        margin-bottom: 50px;
+    }
+    .tag-template .grid, .author-template .grid{
+        margin-right: auto;
+        margin-left: -15px;
+    }
+    .tags-container, .author-template .author{
+        width: 100%;
+    }
+    .tags{
+        margin-bottom: 10px;
+    }
+    .tags-container .tags{
+        margin-top: 15px;
+    }
+    .subscribe header a{
+        margin: 0 auto 50px;
+    }
+    .subscribe .content-inner article{
+        width: calc(100% - 80px);
+    }
+    .author{
+        max-width: calc(100% - 50px);
+        text-align: center;
+    }
+    .author .social{
+        display: block;
+        text-align: center;
+        margin-top: 13px;
+    }
+    .author-template .author{
+        margin-top: 50px;
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        max-width: 555px;
     }
 }
