@@ -365,8 +365,8 @@ jQuery(document).ready(function($) {
             offset_top: 50
         });
         $(".tags-container").stick_in_parent();
-        $(".content-inner .info-bar").stick_in_parent();
     }
+    $(".content-inner .info-bar").stick_in_parent();
 
     function progressBar(){
         var postContentOffsetTop = $('.post-content').offset().top;
@@ -451,7 +451,7 @@ jQuery(document).ready(function($) {
             $(".author-template .author").trigger("sticky_kit:detach");
             $(".tags-container").trigger("sticky_kit:detach");
             $(".content-inner .author").trigger("sticky_kit:detach");
-            $(".content-inner .info-bar").trigger("sticky_kit:detach");
+            // $(".content-inner .info-bar").trigger("sticky_kit:detach");
             checkIfSticky = 0;
         }else{
             if (checkIfSticky == 0) {
