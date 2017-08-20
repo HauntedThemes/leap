@@ -1,5 +1,5 @@
 /**
- * Main JS file for Tria
+ * Main JS file for Leap
  */
 
 jQuery(document).ready(function($) {
@@ -8,15 +8,16 @@ jQuery(document).ready(function($) {
         'share-selected-text': true,
         'load-more': true,
         'infinite-scroll': true,
-        'infinite-scroll-step': 1,
-        'disqus-shortname': 'lizun-1'
+        'infinite-scroll-step': 3,
+        'disqus-shortname': 'hauntedthemes-demo'
     };
 
-    var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-    var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    var msnry;
-    var step = 0;
+    var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+        h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
+        msnry,
+        step = 0;
 
+    // Execute on load
     $(window).load(function() {
 
         $('.post-content img').each(function(index, el) {
@@ -36,11 +37,7 @@ jQuery(document).ready(function($) {
         if ($('.grid').length) {
 
         	$('.grid .post').each(function(index, el) {
-        		var minHeight = $(this).find('.tags').height() + 125;
-        		var postMetaHeight = $(this).find('.post-meta').height();
-        		if (minHeight > postMetaHeight) {
-        			$(this).find('.post-meta').height(minHeight).addClass('expand');
-        		};
+                expand($(this));
 
                 var a = $(this).find('.post-title a');
                 a.html(a.html().replace(/^(\w+)/, '<span>$1</span>'));
@@ -104,7 +101,9 @@ jQuery(document).ready(function($) {
             }).done(function(data) {
                 var sum = nextPage*pagination;
                 if (sum >= data.meta.pagination.total) {
-                    $('#load-posts').addClass('end').text('No more posts');
+                    setTimeout(function() {
+                        $('#load-posts').addClass('end').text('No more posts');
+                    }, 500);
                 }
                 nextPage += 1;
             }).fail(function(err) {
@@ -148,7 +147,100 @@ jQuery(document).ready(function($) {
     	};
 	});
 
-    // Tria's functions
+    // Menu trigger
+    $(".nav-trigger").on('click', function(event) {
+        event.preventDefault();
+        if ($(".search-trigger").hasClass('active')) {
+            $(".search-trigger").toggleClass('active');
+            $('.search-container').slideToggle(500, function(){
+                $(".nav-trigger").toggleClass('active');
+                $('.menu-container').slideToggle(500);
+            });
+        }else{
+            $(".nav-trigger").toggleClass('active');
+            $('.menu-container').slideToggle(500);
+        }
+    });
+
+    // Initialize ghostHunter - A Ghost blog search engine
+    $("#search-field").ghostHunter({
+        results             : "#results",
+        onKeyUp             : true,
+        zeroResultsInfo     : true,
+        displaySearchInfo   : true,
+        info_template       : "<p>No posts found</p>",
+        result_template     : "<li><a href='{{link}}' title='{{title}}'>{{title}}</a></li>",
+        onComplete      : function( results ){
+            if (results.length == 0 && $('#search-field').val() != '') {
+                $('#results p').addClass('empty');
+            };
+            if ($('.search-inner').find('a').length) {
+                $('.search-inner a').each(function(index, el) {
+                    var a = $(this);
+                    a.html(a.html().replace(/^(\w+)/, '<span>$1</span>'));
+                });
+            };
+            $('#results li').each(function(index, el) {
+                if (index > 11) {
+                    $(this).hide();
+                };
+            });
+        }
+    });
+
+    // Highlight active tag
+    if ($('.tag-template').length) {
+        var tagSlug = $('.tag-template').attr('data-tag');
+        $('.tags-container .' + tagSlug).parent().addClass('active');
+    };
+
+    // Position social share buttons inside a single post
+    var checkIfSticky = 0;
+    if (w >= 900) {
+        stickIt();
+        checkIfSticky = 1;
+    };
+    $(".content-inner .info-bar").stick_in_parent().
+    on("sticky_kit:stick", function(e) {
+        $(".content-inner .info-bar").addClass('active');
+    })
+    .on("sticky_kit:unstick", function(e) {
+        $(".content-inner .info-bar").removeClass('active');
+    });
+
+    // Initialize shareSelectedText
+    if (config['share-selected-text']) {
+        shareSelectedText('.content-inner .post-content', {
+            sanitize: true,
+            buttons: [
+                'twitter',
+            ],
+            tooltipTimeout: 250
+        });
+    };
+
+    $(window).on('resize', function(event) {
+        w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        if (w < 900) {
+            $(".author-template .author").trigger("sticky_kit:detach");
+            $(".tags-container").trigger("sticky_kit:detach");
+            $(".content-inner .author").trigger("sticky_kit:detach");
+            checkIfSticky = 0;
+        }else{
+            if (checkIfSticky == 0) {
+                stickIt();
+                checkIfSticky++;
+            }
+        };
+        $('.grid .post').each(function(index, el) {
+            if ($(this).find('.post-meta').hasClass('expand')) {
+                $(this).find('.post-meta').attr('style', '').removeClass('expand');
+                expand($(this));
+            };
+        });
+    });
+
+    // Leap's functions
 
     // Check if element is into view when scrolling
     function isScrolledIntoView(elem){
@@ -225,7 +317,7 @@ jQuery(document).ready(function($) {
         }
 
         var template = [
-        	'<article class="post grid-item {{#tags}}{{#tags.tag}}tag-{{slug}} {{/tags.tag}}{{/tags}}" data-id="{{comment_id}}">',
+        	'<article class="post grid-item {{#featured}}featured{{/featured}} {{#tags}}{{#tags.tag}}tag-{{slug}} {{/tags.tag}}{{/tags}}" data-id="{{comment_id}}">',
 			    '<div class="content-holder">',
 			        '<div class="post-meta {{#feature_image}}has-image{{/feature_image}}">',
 			            '{{#tags}}',
@@ -257,11 +349,7 @@ jQuery(document).ready(function($) {
         post.find('.content-holder').addClass('no-opacity');
         $('#content .grid').append( post );
         $('#content .grid').imagesLoaded( function() {
-	        var minHeight = post.find('.tags').height() + 125;
-			var postMetaHeight = post.find('.post-meta').height();
-			if (minHeight > postMetaHeight) {
-				post.find('.post-meta').height(minHeight).addClass('expand');
-			};
+	        expand($(this));
 
             var a = post.find('.post-title a');
             a.html(a.html().replace(/^(\w+)/, '<span>$1</span>'));
@@ -288,6 +376,16 @@ jQuery(document).ready(function($) {
         });
     }
 
+    // Expand post image if is too small
+    function expand(el){
+        var minHeight = el.find('.tags').height() + 125;
+        var postMetaHeight = el.find('.post-meta').height();
+        if (minHeight > postMetaHeight) {
+            el.find('.post-meta').height(minHeight).addClass('expand');
+        };
+    }
+
+    // Search trigger
     $(".search-trigger").on('click', function(event) {
         event.preventDefault();
         if ($(".nav-trigger").hasClass('active')) {
@@ -306,57 +404,7 @@ jQuery(document).ready(function($) {
         };
     });
 
-    $(".nav-trigger").on('click', function(event) {
-        event.preventDefault();
-        if ($(".search-trigger").hasClass('active')) {
-            $(".search-trigger").toggleClass('active');
-            $('.search-container').slideToggle(500, function(){
-                $(".nav-trigger").toggleClass('active');
-                $('.menu-container').slideToggle(500);
-            });
-        }else{
-            $(".nav-trigger").toggleClass('active');
-            $('.menu-container').slideToggle(500);
-        }
-    });
-
-    // Initialize ghostHunter - A Ghost blog search engine
-    $("#search-field").ghostHunter({
-        results             : "#results",
-        onKeyUp             : true,
-        zeroResultsInfo     : true,
-        displaySearchInfo   : true,
-        info_template       : "<p>No posts found</p>",
-        result_template     : "<li><a href='{{link}}' title='{{title}}'>{{title}}</a></li>",
-        onComplete      : function( results ){
-            if (results.length == 0 && $('#search-field').val() != '') {
-                $('#results p').addClass('empty');
-            };
-            if ($('.search-inner').find('a').length) {
-                $('.search-inner a').each(function(index, el) {
-                    var a = $(this);
-                    a.html(a.html().replace(/^(\w+)/, '<span>$1</span>'));
-                });
-            };
-            $('#results li').each(function(index, el) {
-                if (index > 11) {
-                    $(this).hide();
-                };
-            });
-        }
-    });
-
-    if ($('.tag-template').length) {
-        var tagSlug = $('.tag-template').attr('data-tag');
-        $('.tags-container .' + tagSlug).parent().addClass('active');
-    };
-
-    var checkIfSticky = 0;
-    if (w >= 992) {
-        stickIt();
-        checkIfSticky = 1;
-    };
-
+    // Initialize stick_in_parent
     function stickIt(){
         $(".author-template .author").stick_in_parent({
             offset_top: 30
@@ -366,8 +414,8 @@ jQuery(document).ready(function($) {
         });
         $(".tags-container").stick_in_parent();
     }
-    $(".content-inner .info-bar").stick_in_parent();
 
+    // Progress bar for inner post
     function progressBar(){
         var postContentOffsetTop = $('.post-content').offset().top;
         var postContentHeight = $('.post-content').height();
@@ -434,32 +482,4 @@ jQuery(document).ready(function($) {
         return re.test(email);
     } 
 
-    // Initialize shareSelectedText
-    if (config['share-selected-text']) {
-        shareSelectedText('.content-inner .post-content', {
-            sanitize: true,
-            buttons: [
-                'twitter',
-            ],
-            tooltipTimeout: 250
-        });
-    };
-
-    $(window).on('resize', function(event) {
-        w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        if (w < 992) {
-            $(".author-template .author").trigger("sticky_kit:detach");
-            $(".tags-container").trigger("sticky_kit:detach");
-            $(".content-inner .author").trigger("sticky_kit:detach");
-            // $(".content-inner .info-bar").trigger("sticky_kit:detach");
-            checkIfSticky = 0;
-        }else{
-            if (checkIfSticky == 0) {
-                stickIt();
-                checkIfSticky++;
-            }
-        };
-    });
-
 });
-

@@ -1,7 +1,7 @@
 {
-    "name": "tria",
-    "description": "Tria theme",
-    "demo": "https://hauntedthemes.com/tria",
+    "name": "leap",
+    "description": "If you're into fashion, design, architecture or simply want something pinterestian, there's no doubt about one thing - this theme is specially tileored for you.",
+    "demo": "https://leap.hauntedthemes.com/",
     "version": "1.0.0",
     "engines": {
         "ghost": ">=1.0.0"
@@ -18,8 +18,9 @@
     "gpm": {
         "type": "theme",
         "categories": [
-            "Minimal",
-            "Personal Blogs"
+            "Fashion",
+            "Design",
+            "Architecture"
         ]
     },
     "keywords": [
@@ -27,6 +28,6 @@
         "theme"
     ],
     "config": {
-        "posts_per_page": 4
+        "posts_per_page": 3
     }
 }
