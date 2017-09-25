@@ -1,4 +1,4 @@
-Leap - Travel Ghost Theme by HauntedThemes
+Leap - Fashion Ghost Theme by HauntedThemes
 ============================
 
 > Copyright (C) HauntedThemes SRL
