@@ -25,10 +25,10 @@
             </div>
             <div class="social">
                 {{#if @blog.facebook}}
-                    <a href="{{facebook_url}}" class="facebook" title="{{@blog.facebook}}"></a>
+                    <a href="{{facebook_url}}" class="facebook" title="{{@blog.facebook}}" target="_blank"></a>
                 {{/if}}
                 {{#if @blog.twitter}}
-                    <a href="{{twitter_url}}" class="twitter" title="{{@blog.twitter}}"></a>
+                    <a href="{{twitter_url}}" class="twitter" title="{{@blog.twitter}}" target="_blank"></a>
                 {{/if}}
             </div>
             <div class="copyright">Copyright &copy; {{date format="YYYY"}}, <a href="{{@blog.url}}">{{@blog.title}}</a>. All Right Reserved.</div>

@@ -36,13 +36,13 @@ jQuery(document).ready(function($) {
         // Initialize Masonry - Cascading grid layout library
         if ($('.grid').length) {
 
-        	$('.grid .post').each(function(index, el) {
+            $('.grid .post').each(function(index, el) {
                 expand($(this));
 
                 var a = $(this).find('.post-title a');
                 a.html(a.html().replace(/^(\w+)/, '<span>$1</span>'));
 
-        	});
+            });
 
             var elem = document.querySelector('.grid');
             msnry = new Masonry(elem, {
@@ -79,8 +79,8 @@ jQuery(document).ready(function($) {
             if ($this.hasClass('was-dots')) {
                 setTimeout(function() {
                     console.log($(this));
-            	   $this.removeClass('was-dots').addClass('dots');
-            	   step = 0;
+                   $this.removeClass('was-dots').addClass('dots');
+                   step = 0;
                 }, 1000);
             };
 
@@ -116,7 +116,7 @@ jQuery(document).ready(function($) {
     if (config['infinite-scroll'] && config['load-more']) {
         var checkTimer = 'on';
         if ($('#load-posts').length > 0) {
-        	$('#load-posts').addClass('dots');
+            $('#load-posts').addClass('dots');
             $(window).on('scroll', function(event) {
                 var timer;
                 if (isScrolledIntoView('#load-posts') && checkTimer == 'on' && step < config['infinite-scroll-step']) {
@@ -124,11 +124,11 @@ jQuery(document).ready(function($) {
                     checkTimer = 'off';
                     step++;
                     timer = setTimeout(function() {
-                    	$('#load-posts').removeClass('load');
+                        $('#load-posts').removeClass('load');
                         checkTimer = 'on';
-	                    if (step == config['infinite-scroll-step']) {
-	                    	$('#load-posts').removeClass('dots').addClass('was-dots');
-	                    };
+                        if (step == config['infinite-scroll-step']) {
+                            $('#load-posts').removeClass('dots').addClass('was-dots');
+                        };
                     }, 1000);
                 };
             });
@@ -136,16 +136,16 @@ jQuery(document).ready(function($) {
     };
 
     $( document ).ajaxStart(function() {
-    	if ($('#load-posts').hasClass('dots load')) {
-			$('#load-posts').addClass('active');
-    	};
-	});
+        if ($('#load-posts').hasClass('dots load')) {
+            $('#load-posts').addClass('active');
+        };
+    });
 
-	$( document ).ajaxComplete(function() {
-    	if ($('#load-posts').hasClass('dots')) {
-			$('#load-posts').removeClass('active');
-    	};
-	});
+    $( document ).ajaxComplete(function() {
+        if ($('#load-posts').hasClass('dots')) {
+            $('#load-posts').removeClass('active');
+        };
+    });
 
     // Menu trigger
     $(".nav-trigger").on('click', function(event) {
@@ -284,13 +284,13 @@ jQuery(document).ready(function($) {
         var date = monthNames[monthNumber] + ' ' + d[2] + ', ' + d[0];
         var excerpt;
         if (postData.custom_excerpt != null) {
-        	excerpt = postData.custom_excerpt;
+            excerpt = postData.custom_excerpt;
         }else{
-        	excerpt = getWords($(postData.html).text());
+            excerpt = getWords($(postData.html).text());
         };
 
         var data = {
-        	comment_id: postData.comment_id,
+            comment_id: postData.comment_id,
             title: postData.title,
             date: {
                 "datetime": datetime,
@@ -305,7 +305,7 @@ jQuery(document).ready(function($) {
             },
             tags: function(){
                 if (!$.isEmptyObject(postData.tags)) {
-                    data.tags.tag = postData.tags;
+                    data.tags.tag = postData.tags.slice( 0, 5 );
                     return true;
                 };
             },
@@ -317,31 +317,31 @@ jQuery(document).ready(function($) {
         }
 
         var template = [
-        	'<article class="post grid-item {{#featured}}featured{{/featured}} {{#tags}}{{#tags.tag}}tag-{{slug}} {{/tags.tag}}{{/tags}}" data-id="{{comment_id}}">',
-			    '<div class="content-holder">',
-			        '<div class="post-meta {{#feature_image}}has-image{{/feature_image}}">',
-			            '{{#tags}}',
-			                '<ul class="tags">',
-			                '{{#tags.tag}}',
-			                    '<li>',
-			                        '<a href="/tag/{{slug}}" title="{{name}}" class="tag tag-{{id}} {{slug}}">{{name}}</a>',
-			                    '</li>',
-			                '{{/tags.tag}}',
-			                '</ul>',
-			            '{{/tags}}',
-			            '<a href="{{url}}" title="{{title}}" class="img-holder">',
-			                '{{#feature_image}}',
-			                    '<img src="{{feature_image}}" alt="{{title}}">',
-			                '{{/feature_image}}',
-			            '</a>',
-			            '<time class="post-date" datetime="{{date.datetime}}">{{date.date}}</time>',
-			        '</div>',
-			        '<h2 class="post-title"><a href="{{url}}" title="{{title}}">{{title}}</a></h2>',
-			        '<p>',
-			            '{{excerpt}}',
-			        '</p>',
-			    '</div>',
-			'</article>'
+            '<article class="post grid-item {{#featured}}featured{{/featured}} {{#tags}}{{#tags.tag}}tag-{{slug}} {{/tags.tag}}{{/tags}}" data-id="{{comment_id}}">',
+                '<div class="content-holder">',
+                    '<div class="post-meta {{#feature_image}}has-image{{/feature_image}}">',
+                        '{{#tags}}',
+                            '<ul class="tags">',
+                            '{{#tags.tag}}',
+                                '<li>',
+                                    '<a href="/tag/{{slug}}" title="{{name}}" class="tag tag-{{id}} {{slug}}">{{name}}</a>',
+                                '</li>',
+                            '{{/tags.tag}}',
+                            '</ul>',
+                        '{{/tags}}',
+                        '<a href="{{url}}" title="{{title}}" class="img-holder">',
+                            '{{#feature_image}}',
+                                '<img src="{{feature_image}}" alt="{{title}}">',
+                            '{{/feature_image}}',
+                        '</a>',
+                        '<time class="post-date" datetime="{{date.datetime}}">{{date.date}}</time>',
+                    '</div>',
+                    '<h2 class="post-title"><a href="{{url}}" title="{{title}}">{{title}}</a></h2>',
+                    '<p>',
+                        '{{excerpt}}',
+                    '</p>',
+                '</div>',
+            '</article>'
         ].join("\n");
 
         var post = Mustache.render(template, data);
@@ -349,30 +349,30 @@ jQuery(document).ready(function($) {
         post.find('.content-holder').addClass('no-opacity');
         $('#content .grid').append( post );
         $('#content .grid').imagesLoaded( function() {
-	        expand($(this));
+            expand(post);
 
             var a = post.find('.post-title a');
             a.html(a.html().replace(/^(\w+)/, '<span>$1</span>'));
 
             msnry.appended( post );
             var animeOpts = {
-				duration: 800,
-				easing: [0.1,1,0.3,1],
-				delay: function(t,i) {
-					return i*35;
-				},
-				opacity: {
-					value: [0,1],
-					duration: 600,
-					easing: 'linear'
-				},
-				translateY: [200,0],
-				translateZ: [300,0],
-				rotateX: [75,0]
+                duration: 800,
+                easing: [0.1,1,0.3,1],
+                delay: function(t,i) {
+                    return i*35;
+                },
+                opacity: {
+                    value: [0,1],
+                    duration: 600,
+                    easing: 'linear'
+                },
+                translateY: [200,0],
+                translateZ: [300,0],
+                rotateX: [75,0]
             }
             animeOpts.targets = '.post[data-id="'+ postData.comment_id +'"] .content-holder';
             anime.remove(animeOpts.targets);
-        	anime(animeOpts);
+            anime(animeOpts);
         });
     }
 
