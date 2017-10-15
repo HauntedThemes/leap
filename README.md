@@ -1,4 +1,4 @@
-Leap by HauntedThemes
+Leap by Haunted Themes
 ============================
 
 > Copyright (C) 2017, HauntedThemes SRL

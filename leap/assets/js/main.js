@@ -449,8 +449,9 @@ jQuery(document).ready(function($) {
             event.preventDefault();
             $('.comments').append('<div id="disqus_thread"></div>').addClass('active');
 
+            var url = [location.protocol, '//', location.host, location.pathname].join('');
             var disqus_config = function () {
-                this.page.url = window.location.href;
+                this.page.url = url;
                 this.page.identifier = $('#content').attr('data-id');
             };
 

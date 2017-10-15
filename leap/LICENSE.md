@@ -1,10 +1,10 @@
-Leap - Fashion Ghost Theme by HauntedThemes
+Leap - Fashion Ghost Theme by Haunted Themes
 ============================
 
 > Copyright (C) HauntedThemes SRL
 > https://www.hauntedthemes.com
 
-Leap is a Ghost Theme created by HauntedThemes. This
+Leap is a Ghost Theme created by Haunted Themes. This
 software is released under the The GNU General Public License, Version 2. Leap
 makes use of third party open source code from several different sources. Where
 possible, this code has been clearly labeled and associated copyright and license
