@@ -744,15 +744,27 @@ header .nav-trigger.active{
     width: 100%;
     border-radius: 5px 5px 0 0;
     top: 0;
+    -webkit-transition: transform 0.3s ease-in-out;
+    -moz-transition: transform 0.3s ease-in-out;
+    -o-transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
+}
+
+.grid article .post-meta.expand img{
     -webkit-transition: height 0.3s ease-in-out, top 0.3s ease-in-out;
     -moz-transition: height 0.3s ease-in-out, top 0.3s ease-in-out;
     -o-transition: height 0.3s ease-in-out, top 0.3s ease-in-out;
     transition: height 0.3s ease-in-out, top 0.3s ease-in-out;
 }
 
-.grid article .post-meta:hover img{
+.grid article .post-meta.expand:hover img{
     height: calc(100% + 20px);
     top: -10px;
+    transform: translateX(-50%);
+}
+
+.grid article .post-meta:hover img{
+    transform: scale(1.1,1.1);
 }
 
 .grid article .tags li:first-child{
