@@ -2044,8 +2044,14 @@ footer .copyright a:hover{
     .tag-template .grid, .author-template .grid{
         margin-left: auto;
         margin-right: auto;
-        width: 292px;
+        width: 100%;
         display: block;
+    }
+    .grid article{
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+        margin-bottom: 15px;
     }
     header .blog-logo img{
         max-width: 130px;

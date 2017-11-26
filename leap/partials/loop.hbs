@@ -1,6 +1,6 @@
 {{!-- This is the post loop - each post will be output using this markup --}}
 {{#foreach posts}}
-<article class="{{post_class}} grid-item">
+<article class="{{post_class}} grid-item" data-id="{{comment_id}}">
     <div class="content-holder">
         <div class="post-meta {{#if feature_image}}has-image{{/if}}">
             {{#if tags}}

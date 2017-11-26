@@ -29,6 +29,11 @@
     {{ghost_foot}}
     
     {{!-- The main JavaScript file for Leap --}}
+    {{#if pagination.pages}}
+    <script>
+        var maxPages = parseInt('{{pagination.pages}}');
+    </script>
+    {{/if}}
     <script type="text/javascript" src="{{asset "js/main.js"}}"></script>
 
 </body>
