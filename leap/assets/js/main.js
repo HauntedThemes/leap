@@ -70,7 +70,7 @@ jQuery(document).ready(function($) {
                 event.preventDefault();
 
                 if (currentPage == maxPages) {
-                    $('#load-posts').addClass('end').text('No more posts');
+                    $('#load-posts').addClass('end').text($('#load-posts').attr('data-end'));
                     return;
                 };
 
@@ -78,6 +78,10 @@ jQuery(document).ready(function($) {
 
                 // next page
                 currentPage++;
+
+                if ($('body').hasClass('paged')) {
+                    pathname = '/';
+                };
 
                 // Load more
                 var nextPage = pathname + 'page/' + currentPage + '/';
@@ -241,9 +245,9 @@ jQuery(document).ready(function($) {
     $(window).on('resize', function(event) {
         w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         if (w < 900) {
-            $(".author-template .author").trigger("sticky_kit:detach");
+            $(".author-template .authors").trigger("sticky_kit:detach");
             $(".tags-container").trigger("sticky_kit:detach");
-            $(".content-inner .author").trigger("sticky_kit:detach");
+            $(".content-inner .authors").trigger("sticky_kit:detach");
             checkIfSticky = 0;
         }else{
             if (checkIfSticky == 0) {
@@ -307,10 +311,10 @@ jQuery(document).ready(function($) {
 
     // Initialize stick_in_parent
     function stickIt(){
-        $(".author-template .author").stick_in_parent({
+        $(".author-template .authors").stick_in_parent({
             offset_top: 30
         });
-        $(".content-inner .author").stick_in_parent({
+        $(".content-inner .authors").stick_in_parent({
             offset_top: 50
         });
         $(".tags-container").stick_in_parent();
@@ -383,5 +387,10 @@ jQuery(document).ready(function($) {
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
     } 
+
+    // Initialize Highlight.js
+    $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+    });
 
 });

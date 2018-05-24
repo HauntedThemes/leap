@@ -28,41 +28,45 @@
                 {{content}}
 
                 {{!-- Everything inside the #author tags pulls data from the author --}}
-                {{#author}}
-                    <section class="author">
-                        {{#if profile_image}}
-                        <figure class="author-image">
-                            <a class="img" href="{{url}}" title="{{name}}"><img src="{{img_url profile_image}}" alt="{{name}}"></a>
-                        </figure>
-                        {{/if}}
-
-                        <div class="author-content">
-                            <h4>
-                                <a href="{{url}}">{{name}}</a>
-                                <span class="social">
-                                    {{#if twitter}}<a href="{{twitter_url}}" class="twitter" title="{{twitter}}" target="_blank"></a>{{/if}}
-                                    {{#if facebook}}<a href="{{facebook_url}}" class="facebook" title="{{facebook}}" target="_blank"></a>{{/if}}
-                                </span>
-                            </h4>
-
-                            {{#if bio}}
-                                <p>{{bio}}</p>
-                            {{else}}
-                                <p>Read <a href="{{url}}">more posts</a> by this author.</p>
+                {{#if authors}}
+                    <section class="authors">
+                    {{#foreach authors}}
+                        <section class="author">
+                            {{#if profile_image}}
+                            <figure class="author-image">
+                                <a class="img" href="{{url}}" title="{{name}}"><img src="{{img_url profile_image}}" alt="{{name}}"></a>
+                            </figure>
                             {{/if}}
-                            <div class="author-meta">
-                                {{#if website}}<span class="author-link"><a href="{{website}}" target="_blank" rel="noopener noreferrer">{{website}}</a></span>{{/if}}
-                                {{#if location}}<span class="author-location">{{location}}</span>{{/if}}
+
+                            <div class="author-content">
+                                <h4>
+                                    <a href="{{url}}">{{name}}</a>
+                                    <span class="social">
+                                        {{#if twitter}}<a href="{{twitter_url}}" class="twitter" title="{{twitter}}" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>{{/if}}
+                                        {{#if facebook}}<a href="{{facebook_url}}" class="facebook" title="{{facebook}}" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>{{/if}}
+                                    </span>
+                                </h4>
+
+                                {{#if bio}}
+                                    <p>{{bio}}</p>
+                                {{else}}
+                                    <p>{{{t "Read <a href='{url}'>more posts</a> by this author" url=(url)}}}.</p>
+                                {{/if}}
+                                <div class="author-meta">
+                                    {{#if website}}<span class="author-link"><a href="{{website}}" target="_blank" rel="noopener noreferrer">{{website}}</a></span>{{/if}}
+                                    {{#if location}}<span class="author-location">{{location}}</span>{{/if}}
+                                </div>
                             </div>
-                        </div>
+                        </section>
+                    {{/foreach}}
                     </section>
-                {{/author}}
+                {{/if}}
 
                 <div class="info-bar">
                     <h4>{{title}}</h4>
                     <div class="social">
-                        <a class="twitter" href="https://twitter.com/intent/tweet/?text={{title}}&url={{@blog.url}}{{url}}" target="_blank" title="Share on Twitter"></a>
-                        <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{@blog.url}}{{url}}" target="_blank" title="Share on Facebook"></a>
+                        <a class="twitter" href="https://twitter.com/intent/tweet/?text={{encode title}}&url={{url absolute="true"}}" target="_blank" title="{{t "Share on Twitter"}}"><i class="fab fa-twitter"></i></a>
+                        <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{url absolute="true"}}" target="_blank" title="{{t "Share on Facebook"}}"><i class="fab fa-facebook-f"></i></a>
                     </div>
                     <div class="progress"></div>
                 </div>
@@ -70,16 +74,16 @@
             </section>
 
             <div class="comments">
-                <a href="#" class="comments-trigger"></a>
+                <a href="#" class="comments-trigger" title="{{t "View comments"}}"></a>
             </div>
 
         </article>
     </main>
     
     <div class="related-posts container">
-        {{#get "posts" limit="4" include="tags" filter="id:-{{comment_id}}+tag:{{primary_tag.slug}}"}}
+        {{#get "posts" limit="4" include="tags" filter="id:-{{id}}+tag:{{primary_tag.slug}}"}}
             {{#if posts}}
-                <h3>Related posts</h3>
+                <h3>{{t "Related posts"}}</h3>
                 <div class="grid">
                     {{> "loop"}}
                     <div class="grid-sizer"></div>

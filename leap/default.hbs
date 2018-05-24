@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{lang}}">
 <head>
 
     {{> theme_head}}
@@ -18,9 +18,6 @@
     </div>
 
     {{> theme_footer}}
-
-    {{!-- jQuery needs to come before `{{ghost_foot}}` so that jQuery can be used in code injection --}}
-    <script type="text/javascript" src="{{asset "js/jquery-1.12.4.min.js"}}"></script>
 
     {{!-- 3rd party scripts --}}
     <script type="text/javascript" src="{{asset "js/libraries.js"}}"></script>

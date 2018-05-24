@@ -2,7 +2,7 @@
     "name": "leap",
     "description": "If you're into fashion, design, architecture or simply want something pinterestian, there's no doubt about one thing - this theme is specially tileored for you.",
     "demo": "https://leap.hauntedthemes.com/",
-    "version": "1.0.7",
+    "version": "1.1.0",
     "license": "GNU General Public License, Version 2",
     "engines": {
         "ghost": ">=1.0.0"

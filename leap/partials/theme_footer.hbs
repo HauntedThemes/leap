@@ -1,8 +1,8 @@
     <footer class="site-footer clearfix">
         <div class="container">
             <div class="container-footer">
-                <div class="tags-col">
-                    <h3>Tags</h3>
+                <div class="tags-col {{^if @labs.subscribers}}no-subscribe-form{{/if}}">
+                    <h3>{{t "Tags"}}</h3>
                     {{#get "tags" limit="all"}}
                         <ul class="tags">
                             {{#foreach tags}}
@@ -13,24 +13,21 @@
                         </ul>
                     {{/get}}
                 </div>
+                {{#if @labs.subscribers}}
                 <div class="newsletter-col">
-                    <h3>Newsletter</h3>
-                    {{subscribe_form
-                        form_class="gh-signin"
-                        input_class="gh-input"
-                        button_class="btn"
-                        placeholder="Your email address"
-                    }}
+                    <h3>{{t "Newsletter"}}</h3>
+                    {{subscribe_form placeholder=(t "Your email address")}}
                 </div>
+                {{/if}}
             </div>
             <div class="social">
                 {{#if @blog.facebook}}
-                    <a href="{{facebook_url}}" class="facebook" title="{{@blog.facebook}}" target="_blank"></a>
+                    <a href="{{facebook_url}}" class="facebook" title="{{@blog.facebook}}" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
                 {{/if}}
                 {{#if @blog.twitter}}
-                    <a href="{{twitter_url}}" class="twitter" title="{{@blog.twitter}}" target="_blank"></a>
+                    <a href="{{twitter_url}}" class="twitter" title="{{@blog.twitter}}" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
                 {{/if}}
             </div>
-            <div class="copyright">Copyright &copy; {{date format="YYYY"}}, <a href="{{@blog.url}}">{{@blog.title}}</a>. All Right Reserved.</div>
+            <div class="copyright">{{t "Copyright"}} &copy; {{date format="YYYY"}}, <a href="{{@blog.url}}">{{@blog.title}}</a>. {{t "All Right Reserved"}}.</div>
         </div>
     </footer>
