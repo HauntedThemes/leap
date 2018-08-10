@@ -1,9 +1,10 @@
     <footer class="site-footer clearfix">
         <div class="container">
             <div class="container-footer">
-                <div class="tags-col {{^if @labs.subscribers}}no-subscribe-form{{/if}}">
-                    <h3>{{t "Tags"}}</h3>
-                    {{#get "tags" limit="all"}}
+                {{#get "tags" limit="all" include="count.posts"}}
+                    {{#if tags}}
+                    <div class="tags-col {{^if @labs.subscribers}}no-subscribe-form{{/if}}">
+                        <h3>{{t "Tags"}}</h3>
                         <ul class="tags">
                             {{#foreach tags}}
                                 <li>
@@ -11,8 +12,9 @@
                                 </li>
                             {{/foreach}}
                         </ul>
-                    {{/get}}
-                </div>
+                    </div>
+                    {{/if}}
+                {{/get}}
                 {{#if @labs.subscribers}}
                 <div class="newsletter-col">
                     <h3>{{t "Newsletter"}}</h3>

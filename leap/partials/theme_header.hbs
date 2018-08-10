@@ -1,11 +1,11 @@
         <header>
         	<div class="header-container">
 	        	<div class="container">
-	        		<span class="nav-trigger"><i></i></span>
+	        		<a href="#" class="nav-trigger" title="{{t "Menu"}}"><i></i></a>
 		            <a class="blog-logo" href="{{@blog.url}}" title="{{@blog.title}}">
 		                {{#if @blog.logo}} <img src="{{@blog.logo}}" alt="{{@blog.title}}" /> {{else}}{{@blog.title}}{{/if}} 
 		            </a>
-		            <a href="#" class="search-trigger"></a>
+		            <a href="#" class="search-trigger" title="{{t "Search"}}"></a>
 	            </div>
             </div>
             
@@ -28,7 +28,7 @@
 						    <form>
 						        <input id="search-field" placeholder="{{t "Search"}}" autocomplete="off"/>
 						    </form>
-						    <ul id="results"></ul>
+						    <ul id="results" data-no-results="{{t "No posts found"}}"></ul>
 						</div>
 					</div>
 				</div>

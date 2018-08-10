@@ -17,7 +17,7 @@ jQuery(document).ready(function($) {
         msnry;
 
     // Execute on load
-    $(window).load(function() {
+    $(window).on('load', function(event) {
 
         $('.post-content img').each(function(index, el) {
             if (!$(this).parent().is("a")) {
@@ -191,7 +191,7 @@ jQuery(document).ready(function($) {
         onKeyUp             : true,
         zeroResultsInfo     : true,
         displaySearchInfo   : true,
-        info_template       : "<p>No posts found</p>",
+        info_template       : "<p>"+ $("#results").attr('data-no-results') +"</p>",
         result_template     : "<li><a href='{{link}}' title='{{title}}'>{{title}}</a></li>",
         onComplete      : function( results ){
             if (results.length == 0 && $('#search-field').val() != '') {
