@@ -3,7 +3,8 @@
 
 {{!-- The main content area - Masonry grid --}}
 <main id="content" class="container" role="main">
-	<div class="tags-container">
+	{{#tag}}
+	<div class="tags-container" data-tag="{{slug}}">
 		{{#get "tags" limit="all"}}
 		    <ul class="tags">
 		    {{#foreach tags}}
@@ -14,6 +15,7 @@
 		    </ul>
 		{{/get}}
 	</div>
+	{{/tag}}
 	<div class="grid">
 	    {{> "loop"}}
 	    <div class="grid-sizer"></div>

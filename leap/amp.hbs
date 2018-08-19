@@ -943,7 +943,7 @@
             </div>
             <section class="post-content">
 
-                {{amp_content}}
+                <div class="editor-content">{{amp_content}}</div>
 
             </section>
 
@@ -951,7 +951,7 @@
     </main>
     {{/post}}
     <footer class="site-footer clearfix">
-        <section class="copyright"><a href="{{@blog.url}}">{{@blog.title}}</a> &copy; {{date format="YYYY"}}</section>
+        <section class="copyright">{{t "Copyright"}} &copy; {{date format="YYYY"}}, <a href="{{@blog.url}}">{{@blog.title}}</a>. {{t "All Right Reserved"}}.</section>
     </footer>
 </body>
 </html>

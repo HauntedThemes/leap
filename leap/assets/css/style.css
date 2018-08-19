@@ -952,6 +952,10 @@ article .post-meta:not(.has-image) .img-holder{
     max-width: 100%;
 }
 
+.content-inner .editor-content img{
+    margin: 25px 0;
+}
+
 .content-inner .kg-width-full img{
     margin-left: -100px;
     max-width: calc(100% + 300px);
@@ -960,10 +964,6 @@ article .post-meta:not(.has-image) .img-holder{
 .content-inner .kg-width-wide img{
     margin-left: -50px;
     max-width: calc(100% + 200px);
-}
-
-.content-inner .kg-card-markdown img{
-    margin: 25px 0;
 }
 
 .content-inner iframe{
@@ -2180,7 +2180,7 @@ footer .copyright a:hover{
     .comments.active{
         padding-bottom: 30px;
     }
-    .content-inner .kg-card-markdown img {
+    .content-inner .editor-content img {
         margin: 10px 0;
     }
     .tags-container, .author-template .author{

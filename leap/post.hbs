@@ -81,7 +81,7 @@
     </main>
     
     <div class="related-posts container">
-        {{#get "posts" limit="4" include="tags" filter="id:-{{id}}+tag:{{primary_tag.slug}}"}}
+        {{#get "posts" limit="4" include="tags" filter="id:-{{id}}+primary_tag:{{primary_tag.slug}}"}}
             {{#if posts}}
                 <h3>{{t "Related posts"}}</h3>
                 <div class="grid">

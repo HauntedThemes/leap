@@ -213,7 +213,7 @@ jQuery(document).ready(function($) {
 
     // Highlight active tag
     if ($('.tag-template').length) {
-        var tagSlug = $('.tag-template').attr('data-tag');
+        var tagSlug = $('.tag-template .tags-container').attr('data-tag');
         $('.tags-container .' + tagSlug).parent().addClass('active');
     };
 
