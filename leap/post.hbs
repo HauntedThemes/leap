@@ -80,6 +80,7 @@
         </article>
     </main>
     
+    {{#if @labs.publicAPI}}
     <div class="related-posts container">
         {{#get "posts" limit="4" include="tags" filter="id:-{{id}}+primary_tag:{{primary_tag.slug}}"}}
             {{#if posts}}
@@ -91,5 +92,6 @@
             {{/if}}
         {{/get}}
     </div>
+    {{/if}}
 
 {{/post}}

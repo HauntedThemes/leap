@@ -5,7 +5,9 @@
 		            <a class="blog-logo" href="{{@blog.url}}" title="{{@blog.title}}">
 		                {{#if @blog.logo}} <img src="{{@blog.logo}}" alt="{{@blog.title}}" /> {{else}}{{@blog.title}}{{/if}} 
 		            </a>
+		            {{#if @labs.publicAPI}}
 		            <a href="#" class="search-trigger" title="{{t "Search"}}"></a>
+		            {{/if}}
 	            </div>
             </div>
             
@@ -21,6 +23,7 @@
 			
 			{{!-- This is the search container - visible after a user clicks the search button --}}
 
+			{{#if @labs.publicAPI}}
 			<div class="search-container">
 				<div class="search-content">
 					<div class="search-inner">
@@ -33,4 +36,5 @@
 					</div>
 				</div>
 			</div>
+			{{/if}}
         </header>
