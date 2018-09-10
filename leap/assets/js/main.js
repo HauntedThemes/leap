@@ -16,8 +16,12 @@ jQuery(document).ready(function($) {
         h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
         msnry;
 
+    setGalleryRation();
+
     // Execute on load
     $(window).on('load', function(event) {
+
+        setGalleryRation();
 
         $('.post-content img').each(function(index, el) {
             if (!$(this).parent().is("a")) {
@@ -392,5 +396,16 @@ jQuery(document).ready(function($) {
     $('pre code').each(function(i, block) {
         hljs.highlightBlock(block);
     });
+
+    // Set the right proportion for images inside the gallery
+    function setGalleryRation(){
+        $('.kg-gallery-image img').each(function(index, el) {
+            var container = $(this).closest('.kg-gallery-image');
+            var width = $(this)[0].naturalWidth;
+            var height = $(this)[0].naturalHeight;
+            var ratio = width / height;
+            container.attr('style', 'flex: ' + ratio + ' 1 0%');
+        });
+    }
 
 });
