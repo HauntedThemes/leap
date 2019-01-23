@@ -25,13 +25,13 @@
                 {{/if}}
             </div>
             <div class="social">
-                {{#if @blog.facebook}}
-                    <a href="{{facebook_url}}" class="facebook" title="{{@blog.facebook}}" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                {{#if @site.facebook}}
+                    <a href="{{facebook_url}}" class="facebook" title="{{@site.facebook}}" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
                 {{/if}}
-                {{#if @blog.twitter}}
-                    <a href="{{twitter_url}}" class="twitter" title="{{@blog.twitter}}" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                {{#if @site.twitter}}
+                    <a href="{{twitter_url}}" class="twitter" title="{{@site.twitter}}" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
                 {{/if}}
             </div>
-            <div class="copyright">{{t "Copyright"}} &copy; {{date format="YYYY"}}, <a href="{{@blog.url}}">{{@blog.title}}</a>. {{t "All Right Reserved"}}.</div>
+            <div class="copyright">{{t "Copyright"}} &copy; {{date format="YYYY"}}, <a href="{{@site.url}}">{{@site.title}}</a>. {{t "All Right Reserved"}}.</div>
         </div>
     </footer>
