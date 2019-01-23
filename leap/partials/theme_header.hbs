@@ -1,40 +1,35 @@
-        <header>
-        	<div class="header-container">
-	        	<div class="container">
-	        		<a href="#" class="nav-trigger" title="{{t "Menu"}}"><i></i></a>
-		            <a class="blog-logo" href="{{@blog.url}}" title="{{@blog.title}}">
-		                {{#if @blog.logo}} <img src="{{@blog.logo}}" alt="{{@blog.title}}" /> {{else}}{{@blog.title}}{{/if}} 
-		            </a>
-		            {{#if @labs.publicAPI}}
-		            <a href="#" class="search-trigger" title="{{t "Search"}}"></a>
-		            {{/if}}
-	            </div>
-            </div>
-            
-            <div class="menu-container">
-				<div class="menu-content">
-					<div class="menu-inner">
-						<div class="container">
-            				{{navigation}}
-						</div>
-					</div>
-				</div>
-            </div>
-			
-			{{!-- This is the search container - visible after a user clicks the search button --}}
-
-			{{#if @labs.publicAPI}}
-			<div class="search-container">
-				<div class="search-content">
-					<div class="search-inner">
-						<div class="container">
-						    <form>
-						        <input id="search-field" placeholder="{{t "Search"}}" autocomplete="off"/>
-						    </form>
-						    <ul id="results" data-no-results="{{t "No posts found"}}"></ul>
-						</div>
-					</div>
+<header>
+	<div class="header-container">
+		<div class="container">
+			<a href="#" class="nav-trigger" title="{{t "Menu"}}"><i></i></a>
+			<a class="blog-logo" href="{{@blog.url}}" title="{{@blog.title}}">
+				{{#if @blog.logo}} <img src="{{@blog.logo}}" alt="{{@blog.title}}" /> {{else}}{{@blog.title}}{{/if}} 
+			</a>
+			<a href="#" class="search-trigger" title="{{t "Search"}}"></a>
+		</div>
+	</div>
+	
+	<div class="menu-container">
+		<div class="menu-content">
+			<div class="menu-inner">
+				<div class="container">
+					{{navigation}}
 				</div>
 			</div>
-			{{/if}}
-        </header>
+		</div>
+	</div>
+	
+	{{!-- This is the search container - visible after a user clicks the search button --}}
+	<div class="search-container">
+		<div class="search-content">
+			<div class="search-inner">
+				<div class="container">
+					<form>
+						<input id="search-field" placeholder="{{t "Search"}}" autocomplete="off"/>
+					</form>
+					<ul id="results" data-no-results="{{t "No posts found"}}"></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>

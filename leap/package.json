@@ -2,10 +2,11 @@
     "name": "leap",
     "description": "If you're into fashion, design, architecture or simply want something pinterestian, there's no doubt about one thing - this theme is specially tileored for you.",
     "demo": "https://leap.hauntedthemes.com/",
-    "version": "1.1.4",
+    "version": "2.0.0",
     "license": "GNU General Public License, Version 2",
     "engines": {
-        "ghost": ">=1.0.0"
+        "ghost": ">=2.0.0",
+        "ghost-api": "v2"
     },
     "author": {
         "name": "Haunted Themes",
@@ -26,6 +27,18 @@
         "ghost-theme"
     ],
     "config": {
-        "posts_per_page": 8
+        "posts_per_page": 8,
+        "image_sizes": {
+            "xs": {
+                "width": 50,
+                "height": 50
+            },
+            "m": {
+                "width": 570
+            },
+            "l": {
+                "width": 855
+            }
+        }
     }
 }

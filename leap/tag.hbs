@@ -5,25 +5,19 @@
 <main id="content" class="container" role="main">
 	{{#tag}}
 		<div class="tags-container" data-tag="{{slug}}">
-			{{#if @labs.publicAPI}}
-				{{#get "tags" limit="all" include="count.posts"}}
-					{{#if tags}}
-					    <ul class="tags">
-					    {{#foreach tags}}
-					    	{{#if count.posts}}
-						        <li>
-						            <a href="{{url}}" title="{{name}}" class="tag tag-{{id}} {{slug}}">{{name}}</a>
-						        </li>
-					        {{/if}}
-					    {{/foreach}}
-					    </ul>
-					{{/if}}
-				{{/get}}
-			{{else}}
-				<ul class="tags">
-					<li><a href="{{url}}" title="{{name}}" class="tag tag-{{id}} {{slug}}">{{name}}</a></li>
-				</ul>
-			{{/if}}
+			{{#get "tags" limit="all" include="count.posts"}}
+				{{#if tags}}
+					<ul class="tags">
+					{{#foreach tags}}
+						{{#if count.posts}}
+							<li>
+								<a href="{{url}}" title="{{name}}" class="tag tag-{{id}} {{slug}}">{{name}}</a>
+							</li>
+						{{/if}}
+					{{/foreach}}
+					</ul>
+				{{/if}}
+			{{/get}}
 		</div>
 	{{/tag}}
 	<div class="grid">

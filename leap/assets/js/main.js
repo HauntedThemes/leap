@@ -9,12 +9,20 @@ jQuery(document).ready(function($) {
         'load-more': true,
         'infinite-scroll': true,
         'infinite-scroll-step': 3,
-        'disqus-shortname': 'hauntedthemes-demo'
+        'disqus-shortname': 'hauntedthemes-demo',
+        'content-api-host': '',
+        'content-api-key': '',
     };
 
     var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
         h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
         msnry;
+
+    var ghostAPI = new GhostContentAPI({
+        host: config['content-api-host'],
+        key: config['content-api-key'],
+        version: 'v2'
+    });
 
     setGalleryRation();
 
@@ -189,29 +197,27 @@ jQuery(document).ready(function($) {
         }
     });
 
-    // Initialize ghostHunter - A Ghost blog search engine
-    $("#search-field").ghostHunter({
-        results             : "#results",
-        onKeyUp             : true,
-        zeroResultsInfo     : true,
-        displaySearchInfo   : true,
-        info_template       : "<p>"+ $("#results").attr('data-no-results') +"</p>",
-        result_template     : "<li><a href='{{link}}' title='{{title}}'>{{title}}</a></li>",
-        onComplete      : function( results ){
-            if (results.length == 0 && $('#search-field').val() != '') {
-                $('#results p').addClass('empty');
-            };
-            if ($('.search-inner').find('a').length) {
-                $('.search-inner a').each(function(index, el) {
-                    var a = $(this);
-                    a.html(a.html().replace(/^(\w+)/, '<span>$1</span>'));
-                });
-            };
-            $('#results li').each(function(index, el) {
-                if (index > 11) {
-                    $(this).hide();
+    var ghostSearch = new GhostSearch({
+        host: config['content-api-host'],
+        key: config['content-api-key'],
+        input: '#search-field',
+        results: '#results',
+        options: {
+            limit: 12,
+        },
+        template: function(result) {
+            let url = [location.protocol, '//', location.host].join('');
+            return '<li><a href="' + url + '/' + result.slug + '/">' + result.title + '</a></li>';  
+        },
+        on: {
+            afterDisplay: function(results){
+                if ($('.search-inner').find('a').length) {
+                    $('.search-inner a').each(function(index, el) {
+                        var a = $(this);
+                        a.html(a.html().replace(/^(\w+)/, '<span>$1</span>'));
+                    });
                 };
-            });
+            },
         }
     });
 

@@ -44,15 +44,16 @@
         </article>
     </main>
 
+    {{!-- Ghost Content API --}}
+    <script type="text/javascript" src="https://unpkg.com/@tryghost/content-api@1.0.0/umd/content-api.min.js"></script>
 
     {{!-- 3rd party scripts --}}
     <script type="text/javascript" src="{{asset "js/libraries.js"}}"></script>
-
-    {{!-- Ghost outputs important scripts and data with this tag --}}
-    {{ghost_foot}}
     
     {{!-- The main JavaScript file for Leap --}}
     <script type="text/javascript" src="{{asset "js/main.js"}}"></script>
 
+    {{!-- Ghost outputs important scripts and data with this tag --}}
+    {{ghost_foot}}
 </body>
 </html>

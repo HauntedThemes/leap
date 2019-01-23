@@ -8,15 +8,12 @@
         <article class="{{post_class}}">
             {{#if feature_image}}
                 <div class="post-meta">
-                    <img src="{{img_url feature_image}}" alt="{{title}}">
+                    <img src="{{img_url feature_image size="l"}}" alt="{{title}}">
                 </div>
             {{/if}}
             <section class="post-content">
-
                 <h1 class="post-title">{{title}}</h1>
-
                 <div class="editor-content">{{content}}</div>
-
             </section>
         </article>
     </main>

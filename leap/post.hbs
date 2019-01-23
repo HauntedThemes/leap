@@ -17,14 +17,13 @@
                     </ul>
                 {{/if}}
                 {{#if feature_image}}
-                    <img src="{{img_url feature_image}}" alt="{{title}}">
+                    <img src="{{img_url feature_image size="l"}}" alt="{{title}}">
                 {{/if}}
                 <time class="post-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="MMMM D, YYYY"}}</time>
             </div>
             <section class="post-content">
 
                 <h1 class="post-title">{{title}}</h1>
-
                 <div class="editor-content">{{content}}</div>
 
                 {{!-- Everything inside the #author tags pulls data from the author --}}
@@ -34,7 +33,7 @@
                         <section class="author">
                             {{#if profile_image}}
                             <figure class="author-image">
-                                <a class="img" href="{{url}}" title="{{name}}"><img src="{{img_url profile_image}}" alt="{{name}}"></a>
+                                <a class="img" href="{{url}}" title="{{name}}"><img src="{{img_url profile_image size="xs"}}" alt="{{name}}"></a>
                             </figure>
                             {{/if}}
 
@@ -80,7 +79,6 @@
         </article>
     </main>
     
-    {{#if @labs.publicAPI}}
     <div class="related-posts container">
         {{#get "posts" limit="4" include="tags" filter="id:-{{id}}+primary_tag:{{primary_tag.slug}}"}}
             {{#if posts}}
@@ -92,6 +90,5 @@
             {{/if}}
         {{/get}}
     </div>
-    {{/if}}
 
 {{/post}}
